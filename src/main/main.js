@@ -119,81 +119,22 @@ let gameMode = 20;
 // 0:Title Screen
 let versusMode = 0;
 
-const palettes = [["rgb(250, 89, 89)", "rgb(255, 170, 170)", "rgba(255, 206, 111, ", "rgb(244, 68, 68)", "rgba(255, 225, 167, "],
-["rgb(95, 216, 84)", "rgb(184, 253, 154)", "rgba(252, 95, 95, ", "rgb(255, 182, 96)", "rgba(254, 141, 141, "],
-["rgb(5, 195, 255)", "rgb(121, 223, 255)", "rgba(218, 96, 254, ", "rgb(231, 134, 255)", "rgba(230, 144, 255, "],
-["rgb(255, 187, 70)", "rgb(248, 255, 122)", "rgba(80, 182, 255, ", "rgb(255, 142, 70)", "rgba(139, 203, 249, "],
-["rgb(177, 89, 255)", "rgb(203, 144, 255)", "rgba(144, 255, 110, ", "rgb(247, 126, 250)", "rgba(190, 255, 170, "],
-["rgb(182, 131, 70)", "rgb(252, 194, 126)", "rgba(47, 186, 123, ", "rgb(255, 112, 66)", "rgba(111, 214, 168, "],
-["rgb(232, 232, 208)", "rgb(255, 255, 255)", "rgba(244, 255, 112, ", "rgb(191, 119, 119)", "rgba(255, 255, 200, "]];
-
-
 const hasTag = [false, false, false, false];
 const tagText = ["", "", "", ""];
 function setTagText(index, value) {
   tagText[index] = value;
   hasTag[index] = true;
 }
-const pPal = [0, 1, 2, 3];
-
-const costumeTimeout = [];
-
-const colours = ["rgba(4, 255, 82, 0.62)", "rgba(117, 20, 255, 0.63)", "rgba(255, 20, 20, 0.63)", "rgba(255, 232, 20, 0.63)"];
-
 let pause = [[true, true], [true, true], [true, true], [true, true]];
 let frameAdvance = [[true, true], [true, true], [true, true], [true, true]];
 
 const startingPoint = [[-50, 50], [50, 50], [-25, 5], [25, 5]];
 const startingFace = [1, -1, 1, -1];
 
-const ground = [[-68.4, 0], [68.4, 0]];
-
-const platforms = [[[-57.6, 27.2], [-20, 27.2]], [[20, 27.2], [57.6, 27.2]], [[-18.8, 54.4], [18.8, 54.4]]];
-
-const wallsL = [[[-68.4, 0], [-68.4, -108.8]]];
-const wallsR = [[[68.4, 0], [68.4, -108.8]]];
-
-const edges = [[[-68.4, 0], [-63.4, 0]], [[68.4, 0], [63.4, 0]]];
-
-//edgeOffset = [[-71.3,-23.7],[71.3,-23.7]];
-const edgeOffset = [[-2.9, -23.7], [2.9, -23.7]];
-
-const edgeOrientation = [1, -1];
-
-const respawnPoints = [[-50, 50, 1], [50, 50, -1], [25, 35, 1], [-25, 35, -1]];
-
-var stageSelect = 0;
-
-function setStageSelect(val) {
-  stageSelect = val;
-}
-
-const blastzone = new Box2D([-224, 200], [224, -108.8]);
-
 let starting = true;
-function setStarting(val) {
-  starting = val;
-}
 let startTimer = 1.5;
-function setStartTimer(val) {
-  startTimer = val;
-}
-function getStartTimer() {
-  return startTimer;
-}
 //matchTimer = 5999.99;
 let matchTimer = 480;
-
-function addMatchTimer(val) {
-  matchTimer += val;
-}
-function setMatchTimer(val) {
-  matchTimer = val;
-}
-
-function getMatchTimer() {
-  return matchTimer;
-}
 
 let usingLocalStorage = false;
 if (typeof (Storage) !== "undefined") {

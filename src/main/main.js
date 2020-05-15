@@ -317,15 +317,6 @@ function togglePort(i) {
   }
 }
 
-function positionPlayersInCSS() {
-  for (var i = 0; i < 4; i++) {
-    var x = (-80 + i * 50) * 2 / 3;
-    var y = -30;
-    player[i].phys.pos = new Vec2D(x, y);
-    player[i].phys.hurtbox = new Box2D([-4 + x, 18 + y], [4 + x, y]);
-  }
-}
-
 // 20:Startup
 // 14:Controller Menu
 // 13:Data Menu
@@ -527,37 +518,6 @@ function interpretPause(pause0, pause1) {
   }
 }
 
-
-let bg1 = 0;
-let bg2 = 0;
-let fg1 = 0;
-let fg2 = 0;
-let ui = 0;
-const c = 0;
-const canvasMain = 0;
-const layers = {
-  BG1: 0,
-  BG2: 0,
-  FG1: 0,
-  FG2: 0,
-  UI: 0
-};
-const layerSwitches = {
-  BG1: true,
-  BG2: true,
-  FG1: true,
-  FG2: true,
-  UI: true
-};
-
-function renderToMain() {
-  var keys = Object.keys(layers);
-  for (var i = 0; i < keys.length; i++) {
-    if (layerSwitches[keys[i]]) {
-      c.drawImage(layers[keys[i]], 0, 0)
-    }
-  }
-}
 
 function update(i, inputBuffers) {
   if (!starting) {

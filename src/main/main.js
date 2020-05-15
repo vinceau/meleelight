@@ -56,8 +56,6 @@ var characterSelections = [0, 0, 0, 0];
 
 var shine = 0.5;
 
-let endTargetGame = false;
-
 let creditsPlayer = 0;
 let calibrationPlayer = 0;
 
@@ -770,75 +768,6 @@ function gameTick(oldInputBuffers) {
     executeHits(input);
     resetHitQueue();
     findPlayers();
-  } else if (gameMode == 6) {
-    // stage select
-    for (var i = 0; i < 4; i++) {
-      if (i < ports) {
-        input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-        sssControls(i, input);
-      }
-    }
-  } else if (gameMode == 7) {
-    // stage select
-    input[targetPlayer] = interpretInputs(targetPlayer, true, playerType[targetPlayer], oldInputBuffers[targetPlayer]);
-    tssControls(targetPlayer, input);
-  } else if (gameMode == 4) {
-    input[targetBuilder] = interpretInputs(targetBuilder, true, playerType[targetBuilder], oldInputBuffers[targetBuilder]);
-    targetBuilderControls(targetBuilder, input);
-  } else if (gameMode == 5) {
-    if (endTargetGame) {
-      finishGame(input);
-    }
-    if (playing || frameByFrame) {
-
-      var now = performance.now();
-      var dt = now - lastUpdate;
-      lastUpdate = now;
-      resetHitQueue();
-      destroyArticles();
-      executeArticles();
-      if (!starting) {
-        input[targetBuilder] = interpretInputs(targetBuilder, true, playerType[targetBuilder], oldInputBuffers[targetBuilder]);
-      }
-      update(targetBuilder, input);
-      executeHits(input);
-      targetHitDetection(targetBuilder);
-      if (!starting) {
-        targetTimerTick();
-      } else {
-        startTimer -= 0.01666667;
-        if (startTimer < 0) {
-          starting = false;
-        }
-      }
-      if (input[targetBuilder][0].s && !input[targetBuilder][1].s) {
-        endGame(input);
-      }
-      if (frameByFrame) {
-        frameByFrameRender = true;
-        wasFrameByFrame = true;
-      }
-      frameByFrame = false;
-
-      if (showDebug) {
-        diff = performance.now() - start;
-        gamelogicTime[0] += diff;
-        gamelogicTime[0] /= 2;
-        if (diff >= 10) {
-          gamelogicTime[3]++;
-        }
-        if (diff < gamelogicTime[2]) {
-          gamelogicTime[2] = diff;
-        }
-        if (diff > gamelogicTime[1]) {
-          gamelogicTime[1] = diff;
-        }
-      }
-    } else {
-      if (!gameEnd) {
-        input[targetBuilder] = interpretInputs(targetBuilder, false, playerType[targetBuilder], oldInputBuffers[targetBuilder]);
-      }
-    }
   } else if (playing || frameByFrame) {
     //console.log("test0");
     /*delta = timestamp - lastFrameTimeMs; // get the delta time since last frame
@@ -1173,7 +1102,6 @@ function endGame(input) {
 }
 
 function finishGame(input) {
-  setEndTargetGame(false);
   gameEnd = true;
   playing = false;
   fg2.save();
@@ -1274,7 +1202,3 @@ export function start() {
   gameTick(nullInputBuffers);
 }
 window.start = start;
-
-function setEndTargetGame(val) {
-  endTargetGame = val;
-}

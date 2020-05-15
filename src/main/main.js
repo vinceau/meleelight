@@ -47,33 +47,33 @@ import {deepObjectMerge} from "./util/deepCopyObject";
 import {setTokenPosSnapToChar} from "../menus/css";
 /*globals performance*/
 
-export const holiday = 0;
-export var snowCount = 150;
+const holiday = 0;
+var snowCount = 150;
 
-export const player = [0,0,0,0];
-export const renderTime = [10,0,100,0];
-export const gamelogicTime = [5,0,100,0];
-export const framerate = [0,0,0];
-export var characterSelections = [0,0,0,0];
+const player = [0,0,0,0];
+const renderTime = [10,0,100,0];
+const gamelogicTime = [5,0,100,0];
+const framerate = [0,0,0];
+var characterSelections = [0,0,0,0];
 
-export var shine = 0.5;
+var shine = 0.5;
 
-export let endTargetGame = false;
+let endTargetGame = false;
 
-export let creditsPlayer = 0;
-export let calibrationPlayer = 0;
+let creditsPlayer = 0;
+let calibrationPlayer = 0;
 
-export let gameEnd = false;
+let gameEnd = false;
 export let controllerResetCountdowns = [0,0,0,0];
-export function setControllerReset( i ) {
+function setControllerReset( i ) {
   controllerResetCountdowns[i] = 0;
 }
 
 let keyboardOccupied = false;
 
-export let usingCustomControls = [false, false, false, false];
+let usingCustomControls = [false, false, false, false];
 
-export function setUsingCustomControls( i, bool, info ) {
+function setUsingCustomControls( i, bool, info ) {
   usingCustomControls[i] = bool;
   if (bool) {
     mType[i] = customGamepadInfo[currentPlayers[i]];
@@ -83,43 +83,43 @@ export function setUsingCustomControls( i, bool, info ) {
   }
 }
 
-export let firstTimeDetected = [true, true, true, true];
+let firstTimeDetected = [true, true, true, true];
 
 window.mType = [null, null, null, null];
 
 
-export const mType = [null,null,null,null];
+const mType = [null,null,null,null];
 
-export  function setMtype(index,val){
+ function setMtype(index,val){
   mType[index] = val;
 }
 
-export const currentPlayers = [];
+const currentPlayers = [];
 
-export function setCurrentPlayer(index,val){
+function setCurrentPlayer(index,val){
   currentPlayers[index] =val;
 }
 
-export const playerAmount = 0;
+const playerAmount = 0;
 
-export const playerType = [-1,-1,-1,-1];
+const playerType = [-1,-1,-1,-1];
 
-export const cpuDifficulty = [3,3,3,3];
+const cpuDifficulty = [3,3,3,3];
 
-export let ports = 0;
-export const activePorts = [];
+let ports = 0;
+const activePorts = [];
 
-export let playing = false;
+let playing = false;
 
-export let frameByFrame = false;
-export let wasFrameByFrame = false;
-export let frameByFrameRender = false;
+let frameByFrame = false;
+let wasFrameByFrame = false;
+let frameByFrameRender = false;
 
-export let findingPlayers = true;
+let findingPlayers = true;
 
-export let showDebug = false;
+let showDebug = false;
 
-export let gameMode = 20;
+let gameMode = 20;
 // 20:Startup
 // 13:Data Menu
 // 12:Keyboard Controls
@@ -135,11 +135,11 @@ export let gameMode = 20;
 // 2:CSS
 // 1:Main Menu
 // 0:Title Screen
-export let versusMode = 0;
+let versusMode = 0;
 
-export const randomTags = ["NEO!","SELF","NOVA","PNDA","Panda","LFFN","Scorp","AZ","AXE","Tempo","TMPO","[A]rmada","WBALLZ","Westballz","PPMD","Kreygasm","M2K","Mang0","USA","SCAR","TOPH","(.Y.)","HBOX","HungryBox","PLUP","Shroomed","SFAT","Wizz","Lucky","S2J","SilentWolf","aMSa","S2J","Hax$"];
+const randomTags = ["NEO!","SELF","NOVA","PNDA","Panda","LFFN","Scorp","AZ","AXE","Tempo","TMPO","[A]rmada","WBALLZ","Westballz","PPMD","Kreygasm","M2K","Mang0","USA","SCAR","TOPH","(.Y.)","HBOX","HungryBox","PLUP","Shroomed","SFAT","Wizz","Lucky","S2J","SilentWolf","aMSa","S2J","Hax$"];
 
-export const palettes = [["rgb(250, 89, 89)","rgb(255, 170, 170)","rgba(255, 206, 111, ","rgb(244, 68, 68)","rgba(255, 225, 167, "],
+const palettes = [["rgb(250, 89, 89)","rgb(255, 170, 170)","rgba(255, 206, 111, ","rgb(244, 68, 68)","rgba(255, 225, 167, "],
 ["rgb(95, 216, 84)","rgb(184, 253, 154)","rgba(252, 95, 95, ","rgb(255, 182, 96)","rgba(254, 141, 141, "],
 ["rgb(5, 195, 255)","rgb(121, 223, 255)","rgba(218, 96, 254, ","rgb(231, 134, 255)","rgba(230, 144, 255, "],
 ["rgb(255, 187, 70)","rgb(248, 255, 122)","rgba(80, 182, 255, ","rgb(255, 142, 70)","rgba(139, 203, 249, "],
@@ -148,74 +148,74 @@ export const palettes = [["rgb(250, 89, 89)","rgb(255, 170, 170)","rgba(255, 206
 ["rgb(232, 232, 208)","rgb(255, 255, 255)","rgba(244, 255, 112, ","rgb(191, 119, 119)","rgba(255, 255, 200, "]];
 
 
-export const hasTag = [false,false,false,false];
-export const tagText = ["","","",""];
-export function setTagText(index,value){
+const hasTag = [false,false,false,false];
+const tagText = ["","","",""];
+function setTagText(index,value){
   tagText[index] = value;
   hasTag[index] = true;
 }
-export const pPal = [0,1,2,3];
+const pPal = [0,1,2,3];
 
-export const costumeTimeout = [];
+const costumeTimeout = [];
 
-export const colours = ["rgba(4, 255, 82, 0.62)","rgba(117, 20, 255, 0.63)","rgba(255, 20, 20, 0.63)","rgba(255, 232, 20, 0.63)"];
+const colours = ["rgba(4, 255, 82, 0.62)","rgba(117, 20, 255, 0.63)","rgba(255, 20, 20, 0.63)","rgba(255, 232, 20, 0.63)"];
 
-export let pause = [[true,true],[true,true],[true,true],[true,true]];
-export let frameAdvance = [[true,true],[true,true],[true,true],[true,true]];
+let pause = [[true,true],[true,true],[true,true],[true,true]];
+let frameAdvance = [[true,true],[true,true],[true,true],[true,true]];
 
-export const startingPoint = [[-50,50],[50,50],[-25,5],[25,5]];
-export const startingFace = [1,-1,1,-1];
+const startingPoint = [[-50,50],[50,50],[-25,5],[25,5]];
+const startingFace = [1,-1,1,-1];
 
-export const ground = [[-68.4,0],[68.4,0]];
+const ground = [[-68.4,0],[68.4,0]];
 
-export const platforms = [[[-57.6,27.2],[-20,27.2]],[[20,27.2],[57.6,27.2]],[[-18.8,54.4],[18.8,54.4]]];
+const platforms = [[[-57.6,27.2],[-20,27.2]],[[20,27.2],[57.6,27.2]],[[-18.8,54.4],[18.8,54.4]]];
 
-export const wallsL = [[[-68.4,0],[-68.4,-108.8]]];
-export const wallsR = [[[68.4,0],[68.4,-108.8]]];
+const wallsL = [[[-68.4,0],[-68.4,-108.8]]];
+const wallsR = [[[68.4,0],[68.4,-108.8]]];
 
-export const edges = [[[-68.4,0],[-63.4,0]],[[68.4,0],[63.4,0]]];
+const edges = [[[-68.4,0],[-63.4,0]],[[68.4,0],[63.4,0]]];
 
 //edgeOffset = [[-71.3,-23.7],[71.3,-23.7]];
-export const edgeOffset = [[-2.9,-23.7],[2.9,-23.7]];
+const edgeOffset = [[-2.9,-23.7],[2.9,-23.7]];
 
-export const edgeOrientation = [1,-1];
+const edgeOrientation = [1,-1];
 
-export const respawnPoints = [[-50,50,1],[50,50,-1],[25,35,1],[-25,35,-1]];
+const respawnPoints = [[-50,50,1],[50,50,-1],[25,35,1],[-25,35,-1]];
 
-export var stageSelect = 0;
+var stageSelect = 0;
 
-export function setStageSelect (val){
+function setStageSelect (val){
   stageSelect = val;
 }
 
-export const blastzone = new Box2D([-224,200],[224,-108.8]);
+const blastzone = new Box2D([-224,200],[224,-108.8]);
 
-export let starting = true;
-export function setStarting(val){
+let starting = true;
+function setStarting(val){
     starting = val;
 }
-export let startTimer = 1.5;
-export function setStartTimer (val){
+let startTimer = 1.5;
+function setStartTimer (val){
   startTimer = val;
 }
-export function getStartTimer(){
+function getStartTimer(){
   return startTimer;
 }
 //matchTimer = 5999.99;
-export let matchTimer = 480;
+let matchTimer = 480;
 
-export function addMatchTimer (val){
+function addMatchTimer (val){
   matchTimer += val;
 }
-export function setMatchTimer (val){
+function setMatchTimer (val){
   matchTimer = val;
 }
 
-export function getMatchTimer(){
+function getMatchTimer(){
   return matchTimer;
 }
 
-export let usingLocalStorage = false;
+let usingLocalStorage = false;
 if (typeof(Storage) !== "undefined") {
   // Code for localStorage/sessionStorage.
   usingLocalStorage = true;
@@ -232,7 +232,7 @@ export function setCookie (cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + "; " + exp;
     localStorage.setItem(cname, cvalue);
 }
-export function setVersusMode (val){
+function setVersusMode (val){
   versusMode = val;
 }
 export function getCookie (cname) {
@@ -250,13 +250,13 @@ export function getCookie (cname) {
   }
 }
 
-export const keys = {};
-export let keyBind = 0;
-export let keyBinding = false;
-export function setKeyBinding (val){
+const keys = {};
+let keyBind = 0;
+let keyBinding = false;
+function setKeyBinding (val){
   keyBinding = val;
 }
-export function overrideKeyboardEvent (e){
+function overrideKeyboardEvent (e){
   if (!showingCode && choosingTag == -1 && e.keyCode != 122 && e.keyCode != 116){
     switch(e.type){
       case "keydown":
@@ -294,7 +294,7 @@ export function overrideKeyboardEvent (e){
   }
 };
 
-export function disabledEventPropagation (e){
+function disabledEventPropagation (e){
   if(e){
     if(e.stopPropagation){
       e.stopPropagation();
@@ -308,14 +308,14 @@ document.onkeydown = overrideKeyboardEvent;
 document.onkeyup = overrideKeyboardEvent;
 
 /*var keys = [];
-export const onkeyup (e) {
+const onkeyup (e) {
   keys[e.keyCode]=false;
 }
-export const onkeydown (e) {
+const onkeydown (e) {
   keys[e.keyCode]=true;
 }*/
 
-export function SVG (tag)
+function SVG (tag)
 {
    return document.createElementNS('http://www.w3.org/2000/svg', tag);
 }
@@ -333,7 +333,7 @@ window.addEventListener("gamepadconnected", function(e) {
 });
 if (navigator.getGamepads) console.log(navigator.getGamepads());
 
-export function matchTimerTick (input){
+function matchTimerTick (input){
   matchTimer -= 0.016667;
 
   if (dom.matchMinutes && dom.matchSeconds) {
@@ -347,7 +347,7 @@ export function matchTimerTick (input){
   }
 }
 
-export function screenShake (kb){
+function screenShake (kb){
   var seed = [Math.random(),Math.random(),Math.random(),Math.random()];
   fg1.translate(kb*0.1*seed[0],kb*0.1*seed[1]);
   setTimeout(function(){fg1.translate(-kb*0.05*seed[0],-kb*0.05*seed[1])},20);
@@ -356,7 +356,7 @@ export function screenShake (kb){
   setTimeout(function(){fg1.translate(kb*0.05*seed[2],kb*0.05*seed[3])},80);
 }
 
-export function percentShake (kb,i){
+function percentShake (kb,i){
   player[i].percentShake = new Vec2D(kb*0.1*Math.random(),kb*0.1*Math.random());
   setTimeout(function(){player[i].percentShake = new Vec2D(kb*0.05*Math.random(),kb*0.05*Math.random())},20);
   setTimeout(function(){player[i].percentShake = new Vec2D(-kb*0.1*Math.random(),-kb*0.1*Math.random())},40);
@@ -365,7 +365,7 @@ export function percentShake (kb,i){
 }
 
 
-export function findPlayers (){
+function findPlayers (){
   var gps = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
   /*if (typeof gps != "undefined"){
     console.log(gps);
@@ -469,11 +469,11 @@ export function findPlayers (){
   }
 }
 
-export function setPlayerType(playerSlot,type){
+function setPlayerType(playerSlot,type){
   playerType[playerSlot] = type;
 }
 
-export function addPlayer (i, controllerInfo){
+function addPlayer (i, controllerInfo){
   if(controllerInfo === 99){
     ports++;
     currentPlayers[ports - 1] = i;
@@ -491,7 +491,7 @@ export function addPlayer (i, controllerInfo){
   }
 }
 
-export function togglePort (i){
+function togglePort (i){
   playerType[i]++;
   if (playerType[i] == 3) {
     playerType[i] = -1;
@@ -509,7 +509,7 @@ export function togglePort (i){
   }
 }
 
-export function positionPlayersInCSS (){
+function positionPlayersInCSS (){
   for (var i=0;i<4;i++){
       var x = (-80+i*50)*2/3;
       var y = -30;
@@ -535,85 +535,11 @@ export function positionPlayersInCSS (){
 // 1:Main Menu
 // 0:Title Screen
 
-export function changeGamemode (newGamemode){
-  bg1.fillStyle = "black";
-  bg1.fillRect(0, 0, layers.BG1.width, layers.BG1.height);
-  fg1.clearRect(0, 0, layers.FG1.width, layers.FG1.height);
-
+function changeGamemode (newGamemode){
   gameMode = newGamemode;
-  switch (newGamemode) {
-    // TITLESCREEN
-    case 0:
-      drawStartScreenInit();
-      break;
-      // MAIN MENU
-    case 1:
-      $("#logoVid").remove();
-      drawMainMenuInit();
-      break;
-      // CSS
-    case 2:
-      drawCSSInit();
-      break;
-      // Playing (VS)
-    case 3:
-      drawBackgroundInit();
-      drawStageInit();
-      break;
-      // Target Builder
-    case 4:
-      break;
-      // Target Playing
-    case 5:
-      drawBackgroundInit();
-      drawStageInit();
-      break;
-      // Stage select (vs)
-    case 6:
-      drawSSSInit();
-      break;
-      // Target Select
-    case 7:
-      drawTSSInit();
-      break;
-      // sound menu
-    case 10:
-      drawAudioMenuInit();
-      break;
-      // gameplay menu
-    case 11:
-      drawGameplayMenuInit();
-      break;
-      // keyboard menu
-    case 12:
-      drawKeyboardMenuInit();
-      break;
-      // credits
-    case 13:
-      drawCreditsInit();
-      break;
-      // Multiplayer Modes
-    case 14:
-      drawControllerMenuInit();
-
-      break;
-    case 15:
-      drawCSSInit();
-      connectToMPServer();
-
-      break;
-
-
-      // startup
-    case 20:
-      break;
-    default:
-      break;
-  }
 }
 
-
-/*export const addPlayer (i,gType,pType){
+/*const addPlayer (i,gType,pType){
   console.log(i,gType,pType);
 
   currentPlayers.push(i);
@@ -644,12 +570,12 @@ export function changeGamemode (newGamemode){
   playerAmount++;
 }
 
-export const removePlayer (i){
+const removePlayer (i){
   playerType[i] = -1;
   playerAmount--;
 }*/
 
-export function interpretInputs  (i, active,playertype, inputBuffer) {
+function interpretInputs  (i, active,playertype, inputBuffer) {
 
   let tempBuffer = nullInputs();
 
@@ -842,21 +768,21 @@ function interpretPause(pause0, pause1) {
 }
 
 
-export let bg1 = 0;
-export let bg2 = 0;
-export let fg1 = 0;
-export let fg2 = 0;
-export let ui = 0;
-export const c = 0;
-export const canvasMain = 0;
-export const layers = {
+let bg1 = 0;
+let bg2 = 0;
+let fg1 = 0;
+let fg2 = 0;
+let ui = 0;
+const c = 0;
+const canvasMain = 0;
+const layers = {
   BG1 : 0,
   BG2 : 0,
   FG1 : 0,
   FG2 : 0,
   UI : 0
 };
-export const layerSwitches = {
+const layerSwitches = {
   BG1 : true,
   BG2 : true,
   FG1 : true,
@@ -864,7 +790,7 @@ export const layerSwitches = {
   UI : true
 };
 
-export function renderToMain (){
+function renderToMain (){
   var keys = Object.keys(layers);
   for (var i = 0; i < keys.length; i++) {
     if (layerSwitches[keys[i]]) {
@@ -873,7 +799,7 @@ export function renderToMain (){
   }
 }
 
-export function update (i,inputBuffers){
+function update (i,inputBuffers){
   if (!starting){
     if (currentPlayers[i] != -1){
       if (playerType[i] == 0){
@@ -894,7 +820,7 @@ let lastFrameTimeMs = 0;
 let lastUpdate = performance.now();
 
 
-export function gameTick (oldInputBuffers){
+function gameTick (oldInputBuffers){
   var start = performance.now();
   var diff = 0;
 
@@ -1127,7 +1053,7 @@ export function gameTick (oldInputBuffers){
 
 }
 
-export function clearScreen (){
+function clearScreen (){
   //bg1.fillStyle = "rgb(0, 0, 0)";
   //bg1.fillRect(0,0,layers.BG1.width,layers.BG1.height);
   bg2.clearRect(0, 0, layers.BG2.width, layers.BG2.height);
@@ -1138,7 +1064,7 @@ export function clearScreen (){
 
 let otherFrame = true;
 let fps30 = false;
-export function renderTick (){
+function renderTick (){
   window.requestAnimationFrame(renderTick);
   otherFrame ^= true;
   if ((fps30 && otherFrame) || !fps30) {
@@ -1268,7 +1194,7 @@ export function renderTick (){
   }
 }
 
-export function buildPlayerObject (i){
+function buildPlayerObject (i){
   player[i] = new playerObject(characterSelections[i],startingPoint[i],startingFace[i]);
   player[i].phys.ECB1 = [new Vec2D(startingPoint[i].x,startingPoint[i].y),new Vec2D(startingPoint[i].x,startingPoint[i].y),new Vec2D(startingPoint[i].x,startingPoint[i].y),new Vec2D(startingPoint[i].x,startingPoint[i].y)];
   player[i].phys.ECBp = [new Vec2D(startingPoint[i].x,startingPoint[i].y),new Vec2D(startingPoint[i].x,startingPoint[i].y),new Vec2D(startingPoint[i].x,startingPoint[i].y),new Vec2D(startingPoint[i].x,startingPoint[i].y)];
@@ -1277,7 +1203,7 @@ export function buildPlayerObject (i){
 
 
 
-export function initializePlayers (i,target){
+function initializePlayers (i,target){
   buildPlayerObject(i);
   if (target) {
     drawVfx({
@@ -1292,13 +1218,13 @@ export function initializePlayers (i,target){
   }
 }
 
-export function startGame (){
+function startGame (){
   setVsStage(stageSelect);
   setBackgroundType(Math.round(Math.random()));
   if (holiday == 1){
     createSnow();
   }
-  changeGamemode(3);
+  // changeGamemode(3);
   resetVfxQueue();
   for (var n = 0; n < 4; n++) {
     if (playerType[n] > -1) {
@@ -1344,7 +1270,7 @@ export function startGame (){
   playing = true;
 }
 
-export function endGame (input){
+function endGame (input){
   gameEnd = false;
   resetLostStockQueue();
     setPhantonQueue([]);
@@ -1359,13 +1285,13 @@ export function endGame (input){
   setTokenPosSnapToChar(2);
   setTokenPosSnapToChar(3);
   if (gameMode == 3) {
-    changeGamemode(2);
+    // changeGamemode(2);
     MusicManager.playMenuLoop();
   } else if (gameMode == 5) {
     if (targetTesting) {
-      changeGamemode(4);
+      // changeGamemode(4);
     } else {
-      changeGamemode(7);
+      // changeGamemode(7);
     }
   }
   pause = [[true,true],[true,true],[true,true],[true,true]];
@@ -1389,7 +1315,7 @@ export function endGame (input){
   }
 }
 
-export function finishGame (input){
+function finishGame (input){
     setEndTargetGame(false);
   gameEnd = true;
   playing = false;
@@ -1713,38 +1639,38 @@ export function start (){
 }
 window.start = start;
 
-export function customDeadzone (){
+function customDeadzone (){
     this.ls = new Vec2D(0,0);
     this.cs = new Vec2D(0,0);
     this.l = 0;
     this.r = 0;
 }
 
-export function addShine (val){
+function addShine (val){
     shine += val;
 }
-export function setShine (val){
+function setShine (val){
     shine = val;
 }
-export function setFindingPlayers(val){
+function setFindingPlayers(val){
   findingPlayers = val;
 }
-export function setPlaying(val){
+function setPlaying(val){
   playing = val;
 }
-export function setEndTargetGame(val){
+function setEndTargetGame(val){
     endTargetGame = val;
 }
-export function setCreditsPlayer(val){
+function setCreditsPlayer(val){
   creditsPlayer =val;
 }
-export function setCalibrationPlayer(val){
+function setCalibrationPlayer(val){
   calibrationPlayer =val;
 }
 
 const dom = {};
 
-export function cacheDom() {
+function cacheDom() {
   const elementIds = [
     "matchMinutes",
     "matchSeconds",
@@ -1763,6 +1689,6 @@ export function cacheDom() {
   });
 };
 
-export function setCS(index,val){
+function setCS(index,val){
   characterSelections[index] = val;
 }

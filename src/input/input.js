@@ -2,10 +2,9 @@
 // @flow
 
 import {Vec2D} from "../main/util/Vec2D";
-import {keyMap} from "../settings";
 import {controllerResetCountdowns} from "../main/main";
 import {buttonState, triggerValue, stickValue, dPadState } from "./gamepad/retrieveGamepadInputs";
-import {scaleToGCTrigger, scaleToMeleeAxes, tasRescale, deaden} from "./meleeInputs";
+import {scaleToGCTrigger, scaleToMeleeAxes, deaden} from "./meleeInputs";
 
 import type {GamepadInfo} from "./gamepad/gamepadInfo";
 

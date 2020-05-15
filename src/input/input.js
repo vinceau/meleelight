@@ -9,7 +9,6 @@ import {scaleToGCTrigger, scaleToMeleeAxes, tasRescale, deaden} from "./meleeInp
 
 import type {GamepadInfo} from "./gamepad/gamepadInfo";
 import {replayActive, retrieveReplayInputs} from "../main/replay";
-import {retrieveNetworkInputs} from "../main/multiplayer/streamclient";
 
 type Input = { a : bool
                     , b : bool
@@ -126,8 +125,6 @@ export function pollInputs ( gameMode : number, frameByFrame : bool, controllerI
       return aiInputBank[playerSlot][0];
     }else if (controllerInfo === "keyboard") { // keyboard controls
       input = pollKeyboardInputs(gameMode, frameByFrame, keys);
-    } else if (playertype === 2 || controllerInfo === 99) {
-      input = pollNetworkInputs(gameMode, controllerInfo, playerSlot, controllerIndex, frameByFrame);
     }else if (playertype === 0) {
       input = pollGamepadInputs(gameMode, controllerInfo, playerSlot, controllerIndex, frameByFrame);
     }
@@ -135,10 +132,6 @@ export function pollInputs ( gameMode : number, frameByFrame : bool, controllerI
     console.log(input);
     return input;
   }
-
-function pollNetworkInputs(gameMode, controllerType, playerSlot, controllerIndex, frameByFrame) {
-  return retrieveNetworkInputs(playerSlot,controllerIndex);
-}
 
 function pollReplayInputs(gameMode, controllerType, playerSlot, controllerIndex, frameByFrame) {
   return retrieveReplayInputs(playerSlot,controllerIndex);

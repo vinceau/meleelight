@@ -42,16 +42,6 @@ let gameMode = 20;
 let pause = [[true, true], [true, true], [true, true], [true, true]];
 let frameAdvance = [[true, true], [true, true], [true, true], [true, true]];
 
-let usingLocalStorage = false;
-if (typeof (Storage) !== "undefined") {
-  // Code for localStorage/sessionStorage.
-  usingLocalStorage = true;
-  console.log("local storage works");
-} else {
-  // Sorry! No Web Storage support..
-  console.log("local storage does not work");
-}
-
 export function getCookie(cname) {
   return "";
 }

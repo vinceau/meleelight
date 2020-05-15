@@ -273,23 +273,7 @@ function interpretInputs(i, active, playertype, inputBuffer) {
     frameByFrame = true;
   }
 
-  if (mType[i] === "keyboard") { // keyboard controls
-
-    if (tempBuffer[0].s || tempBuffer[1].s || (gameMode === 5 && (tempBuffer[0].du || tempBuffer[1].du))) {
-      pause[i][0] = true;
-    }
-    else {
-      pause[i][0] = false;
-    }
-
-    if (!playing && (gameMode == 3 || gameMode == 5)
-      && (tempBuffer[0].a || tempBuffer[1].a) && (tempBuffer[0].l || tempBuffer[1].l)
-      && (tempBuffer[0].r || tempBuffer[1].r) && (tempBuffer[0].s || tempBuffer[1].s)) {
-    }
-
-    interpretPause(pause[i][0], pause[i][1]);
-  }
-  else if (mType[i] !== null) { // gamepad controls
+  if (mType[i] !== null) { // gamepad controls
 
     if (!playing && (gameMode == 3 || gameMode == 5) &&
       (tempBuffer[0].a && tempBuffer[0].l && tempBuffer[0].r && tempBuffer[0].s)

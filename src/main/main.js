@@ -108,61 +108,6 @@ export function getCookie(cname) {
   }
 }
 
-const keys = {};
-let keyBind = 0;
-let keyBinding = false;
-
-function overrideKeyboardEvent(e) {
-  if (!showingCode && choosingTag == -1 && e.keyCode != 122 && e.keyCode != 116) {
-    switch (e.type) {
-      case "keydown":
-        if (!keys[e.keyCode]) {
-          keys[e.keyCode] = true;
-          keyBind = e.keyCode;
-          keyBinding = true;
-          // do key down stuff here
-        }
-        break;
-      case "keyup":
-        delete (keys[e.keyCode]);
-        // do key up stuff here
-        break;
-    }
-    disabledEventPropagation(e);
-    e.preventDefault();
-    return false;
-  } else {
-    if (choosingTag > -1) {
-      if (e.keyCode == 13) {
-        switch (e.type) {
-          case "keydown":
-            keys[13] = true;
-            break;
-          case "keyup":
-            delete (keys[13]);
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    return true;
-  }
-};
-
-function disabledEventPropagation(e) {
-  if (e) {
-    if (e.stopPropagation) {
-      e.stopPropagation();
-    } else if (event) {
-      event.cancelBubble = true;
-    }
-  }
-};
-
-document.onkeydown = overrideKeyboardEvent;
-document.onkeyup = overrideKeyboardEvent;
-
 window.addEventListener("gamepadconnected", function (e) {
   console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
     e.gamepad.index, e.gamepad.id,
@@ -176,6 +121,8 @@ function matchTimerTick(input) {
   if (matchTimer <= 0) {
   }
 }
+
+const keys = {};
 
 function findPlayers() {
   var gps = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);

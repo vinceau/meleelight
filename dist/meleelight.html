@@ -3,47 +3,15 @@
 
 <head>
   <meta charset="utf-8" />
-  <link href="./meleelight.css" rel="stylesheet" />
 </head>
 
 <body>
   <div id="loadScreen">
-    <canvas id="loadCanvas" width="300" height="200"></canvas>
-    <div id="loadPercent">
-      <p><span id="loadPercentEdit">0</span>%</p>
-    </div>
-    <div id="loadText">
-      <p id="loadTextEdit">Loading...</p>
-    </div>
+    <p id="loadTextEdit">Loading...</p>
   </div>
+  <script type="text/javascript" src="./js/main.js"></script>
   <script>
-    window.offlineMode = true;
-    (function () {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('js/service-worker.js');
-      }
-    })();
-    var scripts = [
-      "./js/main.js",
-      "./js/animations.js",
-    ];
-    var loadCount = 0;
-
-    function handleScriptLoad() {
-      loadCount++;
-      if (loadCount >= scripts.length) {
-        document.getElementById("loadScreen").remove();
-        start();
-      }
-    }
-
-    scripts.forEach(function (src) {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.onload = handleScriptLoad;
-      document.body.appendChild(script);
-      script.src = src;
-    });
+    start();
   </script>
 </body>
 

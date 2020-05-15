@@ -1,13 +1,11 @@
 /* eslint-disable */
 import { keyMap } from 'settings';
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
-import { saveGameState } from "./replay";
 import { nullInputs, pollInputs, nullInput } from "../input/input";
 import { deaden } from "../input/meleeInputs";
 import { getGamepadNameAndInfo } from "../input/gamepad/findGamepadInfo";
 import { customGamepadInfo } from "../input/gamepad/gamepads/custom";
 import { buttonState } from "../input/gamepad/retrieveGamepadInputs";
-import { updateGamepadSVGState, updateGamepadSVGColour, cycleGamepadColour } from "../input/gamepad/drawGamepad";
 import { deepObjectMerge } from "./util/deepCopyObject";
 
 const player = [0, 0, 0, 0];
@@ -183,10 +181,6 @@ function addPlayer(i, controllerInfo) {
     currentPlayers[ports - 1] = i;
     playerType[ports - 1] = 0;
     mType[ports - 1] = controllerInfo;
-    if (showDebug) {
-      updateGamepadSVGColour(i, "gamepadSVG" + i);
-      document.getElementById("gamepadSVG" + i).style.display = "";
-    }
   }
 }
 
@@ -311,24 +305,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
     tempBuffer[0].csY = deaden(tempBuffer[0].rawcsY);
   }
 
-  if (showDebug) {
-    updateGamepadSVGState(i, "gamepadSVG" + i, tempBuffer[0]);
-  }
-
-  if (gameMode === 14) { // controller calibration screen
-    updateGamepadSVGState(i, "gamepadSVGCalibration", tempBuffer[0]);
-  }
-
-  if (showDebug || gameMode === 14) {
-    const which = (showDebug && gameMode === 14) ? "both" : showDebug ? "debug" : "calibration";
-    if (tempBuffer[0].x && !tempBuffer[1].x && tempBuffer[0].du) {
-      cycleGamepadColour(i, which, true);
-    }
-    if (tempBuffer[0].y && !tempBuffer[1].y && tempBuffer[0].du) {
-      cycleGamepadColour(i, which, false);
-    }
-  }
-
   if (giveInputs[i] === true) {
     //turns out keyboards leave gaps in the input buffer
     deepObjectMerge(true, nullInput(), tempBuffer[0]);
@@ -382,10 +358,7 @@ function gameTick(oldInputBuffers) {
       }
     }
   }
-  saveGameState(input, ports);
-
   setTimeout(gameTick, 16, input);
-
 }
 
 export function start() {

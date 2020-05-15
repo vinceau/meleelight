@@ -403,19 +403,7 @@ function interpretInputs(i, active, playertype, inputBuffer) {
 
 }
 
-function interpretPause(pause0, pause1) {
-  if (pause0 && !pause1) {
-    if (gameMode == 3 || gameMode == 5) {
-      playing ^= true;
-      if (!playing) {
-        renderForeground();
-      } else {
-        changeVolume(MusicManager, masterVolume[1], 1);
-      }
-    }
-  }
-}
-
+function interpretPause(pause0, pause1) {}
 
 function update(i, inputBuffers) {
   if (!starting) {
@@ -449,52 +437,6 @@ function gameTick(oldInputBuffers) {
     for (var i = 0; i < ports; i++) {
       input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
       menuMove(i, input);
-    }
-  } else if (playing || frameByFrame) {
-    var now = performance.now();
-    var dt = now - lastUpdate;
-    lastUpdate = now;
-
-    resetHitQueue();
-    getActiveStage().movingPlatforms();
-    destroyArticles();
-    executeArticles();
-
-    for (var i = 0; i < 4; i++) {
-      if (playerType[i] > -1) {
-        if (!starting) {
-          input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-        }
-        update(i, input);
-      }
-    }
-    checkPhantoms();
-    for (var i = 0; i < 4; i++) {
-      if (playerType[i] > -1) {
-        hitDetect(i, input);
-      }
-    }
-    executeHits(input);
-    articlesHitDetection();
-    executeArticleHits(input);
-    if (frameByFrame) {
-      frameByFrameRender = true;
-      wasFrameByFrame = true;
-    }
-    frameByFrame = false;
-    if (showDebug) {
-      diff = performance.now() - start;
-      gamelogicTime[0] += diff;
-      gamelogicTime[0] /= 2;
-      if (diff >= 10) {
-        gamelogicTime[3]++;
-      }
-      if (diff < gamelogicTime[2]) {
-        gamelogicTime[2] = diff;
-      }
-      if (diff > gamelogicTime[1]) {
-        gamelogicTime[1] = diff;
-      }
     }
   } else if (findingPlayers) {
     findPlayers();

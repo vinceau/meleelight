@@ -540,9 +540,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
     if (!playing && (gameMode == 3 || gameMode == 5)
       && (tempBuffer[0].a || tempBuffer[1].a) && (tempBuffer[0].l || tempBuffer[1].l)
       && (tempBuffer[0].r || tempBuffer[1].r) && (tempBuffer[0].s || tempBuffer[1].s)) {
-      if (tempBuffer[0].b || tempBuffer[1].b) {
-        startGame();
-      }
     }
 
     interpretPause(pause[i][0], pause[i][1]);
@@ -552,9 +549,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
     if (!playing && (gameMode == 3 || gameMode == 5) &&
       (tempBuffer[0].a && tempBuffer[0].l && tempBuffer[0].r && tempBuffer[0].s)
       && (!(tempBuffer[1].a && tempBuffer[1].l && tempBuffer[1].r && tempBuffer[1].s))) {
-      if (tempBuffer[0].b) {
-        startGame();
-      }
     }
 
     if (tempBuffer[0].s || tempBuffer[0].du && gameMode == 5) {
@@ -996,57 +990,6 @@ function initializePlayers(i, target) {
       pos: new Vec2D(startingPoint[i][0], startingPoint[i][1])
     });
   }
-}
-
-function startGame() {
-  setVsStage(stageSelect);
-  if (holiday == 1) {
-    createSnow();
-  }
-  // changeGamemode(3);
-  resetVfxQueue();
-  for (var n = 0; n < 4; n++) {
-    if (playerType[n] > -1) {
-      initializePlayers(n, false);
-      renderPlayer(n);
-      player[n].inCSS = false;
-    }
-    if (versusMode) {
-      player[n].stocks = 1;
-    }
-  }
-  matchTimer = 480;
-  startTimer = 1.5;
-  starting = true;
-  MusicManager.stopWhatisPlaying();
-  switch (stageSelect) {
-    case 0:
-      MusicManager.playBattleFieldLoop();
-      break;
-    case 1:
-      MusicManager.playyStoryLoop();
-      break;
-    case 2:
-      MusicManager.playpStadiumLoop();
-      break;
-    case 3:
-      MusicManager.playDreamLandLoop();
-      break;
-    case 4:
-      MusicManager.playfinaldLoop();
-      break;
-    case 5:
-      MusicManager.playfodLoop();
-      break;
-    default:
-      break;
-  }
-  drawVfx({
-    name: "start",
-    pos: new Vec2D(0, 0)
-  });
-  findingPlayers = false;
-  playing = true;
 }
 
 export function start() {

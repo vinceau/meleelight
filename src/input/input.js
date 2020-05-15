@@ -134,6 +134,8 @@ export function pollInputs ( gameMode : number, frameByFrame : bool, controllerI
     }else if (playertype === 0) {
       input = pollGamepadInputs(gameMode, controllerInfo, playerSlot, controllerIndex, frameByFrame);
     }
+    console.log("got these inputs");
+    console.log(input);
     return input;
   }
 

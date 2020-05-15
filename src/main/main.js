@@ -1526,6 +1526,7 @@ function onFullScreenChange() {
 
 
 export function start (){
+  console.log("starting...");
   if (holiday === 1){
     $("#layerButton").after('<div id="snowButton" class="gameButton" style="width:90px"><img src="assets/christmas/snowflake.png" height=17 width=17 style="display:inline-block"/><p style="width:30px;display:inline-block"><span id="snowButtonEdit">150</span></p><div id="snowMinus" class="snowControl" style="display:inline-block;padding:3px"><p style="padding:0;font-size:20px">-</p></div><div id="snowPlus" style="display:inline-block;padding:3px"><p style="padding:0;font-size:17px">+</p></div></div>');
   }
@@ -1562,174 +1563,174 @@ export function start (){
   bg1.fillRect(0, 0, layers.BG1.width, layers.BG1.height);
   let nullInputBuffers =  [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
   gameTick(nullInputBuffers);
-  renderTick();
+  // renderTick();
 
-  $("#effectsButton").click(function() {
-    if (isShowSFX()) {
-      $("#effectsButtonEdit").empty().append("OFF");
-    } else {
-      $("#effectsButtonEdit").empty().append("ON");
-    }
-    toggleShowSFX();
-  });
+  // $("#effectsButton").click(function() {
+  //   if (isShowSFX()) {
+  //     $("#effectsButtonEdit").empty().append("OFF");
+  //   } else {
+  //     $("#effectsButtonEdit").empty().append("ON");
+  //   }
+  //   toggleShowSFX();
+  // });
 
-  $("#fpsButton").click(function() {
-    if (fps30) {
-      $("#fpsButtonEdit").empty().append("60");
-    } else {
-      $("#fpsButtonEdit").empty().append("30");
-    }
-    fps30 ^= true;
-  });
+  // $("#fpsButton").click(function() {
+  //   if (fps30) {
+  //     $("#fpsButtonEdit").empty().append("60");
+  //   } else {
+  //     $("#fpsButtonEdit").empty().append("30");
+  //   }
+  //   fps30 ^= true;
+  // });
 
-  $("#alphaButton").click(function() {
-    if (getTransparency()) {
-      $("#alphaButtonEdit").empty().append("OFF");
-    } else {
-      $("#alphaButtonEdit").empty().append("ON");
-    }
-      toggleTransparency();
-  });
+  // $("#alphaButton").click(function() {
+  //   if (getTransparency()) {
+  //     $("#alphaButtonEdit").empty().append("OFF");
+  //   } else {
+  //     $("#alphaButtonEdit").empty().append("ON");
+  //   }
+  //     toggleTransparency();
+  // });
 
-  $("#layerButton").hover(function() {
-    $("#layerDropdown").toggle();
-  });
+  // $("#layerButton").hover(function() {
+  //   $("#layerDropdown").toggle();
+  // });
 
-  $(".layer").click(function() {
-    var id = $(this).attr("id");
-    switch (id) {
-      case "layer1":
-        layerSwitches.BG1 ^= true;
-        $("#background1Canvas").toggle();
-        break;
-      case "layer2":
-        layerSwitches.BG2 ^= true;
-        $("#background2Canvas").toggle();
-        break;
-      case "layer3":
-        layerSwitches.FG1 ^= true;
-        $("#foreground1Canvas").toggle();
-        break;
-      case "layer4":
-        layerSwitches.FG2 ^= true;
-        $("#foreground2Canvas").toggle();
-        break;
-      case "layer5":
-        layerSwitches.UI ^= true;
-        $("#uiCanvas").toggle();
-        break;
-      default:
-        break;
-    }
-    $(this).toggleClass("layerOn");
-  });
+  // $(".layer").click(function() {
+  //   var id = $(this).attr("id");
+  //   switch (id) {
+  //     case "layer1":
+  //       layerSwitches.BG1 ^= true;
+  //       $("#background1Canvas").toggle();
+  //       break;
+  //     case "layer2":
+  //       layerSwitches.BG2 ^= true;
+  //       $("#background2Canvas").toggle();
+  //       break;
+  //     case "layer3":
+  //       layerSwitches.FG1 ^= true;
+  //       $("#foreground1Canvas").toggle();
+  //       break;
+  //     case "layer4":
+  //       layerSwitches.FG2 ^= true;
+  //       $("#foreground2Canvas").toggle();
+  //       break;
+  //     case "layer5":
+  //       layerSwitches.UI ^= true;
+  //       $("#uiCanvas").toggle();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   $(this).toggleClass("layerOn");
+  // });
 
-  $("#debugButton").click(function() {
-    if (showDebug) {
-      for (let i = 0; i < 4; i++) {
-        document.getElementById("gamepadSVG"+i).style.display = "none";
-      }
-      $("#debugButtonEdit").empty().append("OFF");
-      $("#debug").hide();
-      $("#players").hide();
-      $("body").css("overflow", "hidden");
-      //var mY = Math.max(($(window).height()-750)/2,0);
-      //$("#display").css("margin",mY+"px 0px 0px "+mX+"px");
-    } else {
-      for (let i = 0; i < 4; i++) {
-        if (playerType[i] !== -1) {
-          updateGamepadSVGColour(i, "gamepadSVG"+i);
-          document.getElementById("gamepadSVG"+i).style.display = "";
-        }
-      }
-      $("#debugButtonEdit").empty().append("ON");
-      $("#debug").show();
-      $("#players").show();
-      $("body").css("overflow", "scroll");
-      //var mY = Math.max(($(window).height()-900)/2,0);
-      //$("#display").css("margin",mY+" 0px 0px px "+mX+"px");
-    }
-    showDebug ^= true;
-    resize();
-  });
+  // $("#debugButton").click(function() {
+  //   if (showDebug) {
+  //     for (let i = 0; i < 4; i++) {
+  //       document.getElementById("gamepadSVG"+i).style.display = "none";
+  //     }
+  //     $("#debugButtonEdit").empty().append("OFF");
+  //     $("#debug").hide();
+  //     $("#players").hide();
+  //     $("body").css("overflow", "hidden");
+  //     //var mY = Math.max(($(window).height()-750)/2,0);
+  //     //$("#display").css("margin",mY+"px 0px 0px "+mX+"px");
+  //   } else {
+  //     for (let i = 0; i < 4; i++) {
+  //       if (playerType[i] !== -1) {
+  //         updateGamepadSVGColour(i, "gamepadSVG"+i);
+  //         document.getElementById("gamepadSVG"+i).style.display = "";
+  //       }
+  //     }
+  //     $("#debugButtonEdit").empty().append("ON");
+  //     $("#debug").show();
+  //     $("#players").show();
+  //     $("body").css("overflow", "scroll");
+  //     //var mY = Math.max(($(window).height()-900)/2,0);
+  //     //$("#display").css("margin",mY+" 0px 0px px "+mX+"px");
+  //   }
+  //   showDebug ^= true;
+  //   resize();
+  // });
 
-  $("#hideButton").click(function() {
-    $("#header").toggle();
-    showHeader ^= true;
-    resize();
-  });
+  // $("#hideButton").click(function() {
+  //   $("#header").toggle();
+  //   showHeader ^= true;
+  //   resize();
+  // });
 
-  $("#fullscreenButton").click(function() {
-    if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !
-        document.webkitIsFullScreen)) {
-      if (document.documentElement.requestFullScreen) {
-        document.documentElement.requestFullScreen();
-      } else if (document.documentElement.mozRequestFullScreen) {
-        document.documentElement.mozRequestFullScreen();
-      } else if (document.documentElement.webkitRequestFullScreen) {
-        document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-      }
-    } else {
-      if (document.cancelFullScreen) {
-        document.cancelFullScreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitCancelFullScreen) {
-        document.webkitCancelFullScreen();
-      }
-    }
-    // resize();
-  });
+  // $("#fullscreenButton").click(function() {
+  //   if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !
+  //       document.webkitIsFullScreen)) {
+  //     if (document.documentElement.requestFullScreen) {
+  //       document.documentElement.requestFullScreen();
+  //     } else if (document.documentElement.mozRequestFullScreen) {
+  //       document.documentElement.mozRequestFullScreen();
+  //     } else if (document.documentElement.webkitRequestFullScreen) {
+  //       document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+  //     }
+  //   } else {
+  //     if (document.cancelFullScreen) {
+  //       document.cancelFullScreen();
+  //     } else if (document.mozCancelFullScreen) {
+  //       document.mozCancelFullScreen();
+  //     } else if (document.webkitCancelFullScreen) {
+  //       document.webkitCancelFullScreen();
+  //     }
+  //   }
+  //   // resize();
+  // });
 
-  document.addEventListener("fullscreenchange", onFullScreenChange, false);
-  document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
-  document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
+  // document.addEventListener("fullscreenchange", onFullScreenChange, false);
+  // document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
+  // document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
 
-  $(".topButton").hover(function() {
-    $(this).children(".buttonDetails").toggle();
-  });
+  // $(".topButton").hover(function() {
+  //   $(this).children(".buttonDetails").toggle();
+  // });
 
-  if (mobile === false) {
-    $(".button").hover(function() {
-      $(this).toggleClass("buttonhighlighted");
-    });
-    $(".socialmedia").hover(function() {
-      $(this).toggleClass("socialmediahighlight");
-    });
-    $(".sugbtn").hover(function() {
-      $(this).toggleClass("sugbtnhighlight");
-    });
-  }
-  $("#appsButton").hover(function() {
-    $("#appsDropdown").show();
-  }, function() {
-    $("#appsDropdown").hide();
-  });
-  if (holiday === 1){
-    $("#snowMinus").click(function() {
-      snowCount-=20;
-      if (snowCount < 0){
-        snowCount = 0;
-      }
-      $("#snowButtonEdit").text(snowCount);
-    });
-    $("#snowPlus").click(function() {
-      snowCount+=20;
-      if (snowCount > 1200){
-        snowCount = 1200;
-      }
-      $("#snowButtonEdit").text(snowCount);
-    });
-  }
+  // if (mobile === false) {
+  //   $(".button").hover(function() {
+  //     $(this).toggleClass("buttonhighlighted");
+  //   });
+  //   $(".socialmedia").hover(function() {
+  //     $(this).toggleClass("socialmediahighlight");
+  //   });
+  //   $(".sugbtn").hover(function() {
+  //     $(this).toggleClass("sugbtnhighlight");
+  //   });
+  // }
+  // $("#appsButton").hover(function() {
+  //   $("#appsDropdown").show();
+  // }, function() {
+  //   $("#appsDropdown").hide();
+  // });
+  // if (holiday === 1){
+  //   $("#snowMinus").click(function() {
+  //     snowCount-=20;
+  //     if (snowCount < 0){
+  //       snowCount = 0;
+  //     }
+  //     $("#snowButtonEdit").text(snowCount);
+  //   });
+  //   $("#snowPlus").click(function() {
+  //     snowCount+=20;
+  //     if (snowCount > 1200){
+  //       snowCount = 1200;
+  //     }
+  //     $("#snowButtonEdit").text(snowCount);
+  //   });
+  // }
 
-  $("#replay").change(function() {
+  // $("#replay").change(function() {
 
 
-    // grab the first image in the FileList object and pass it to the function
-    loadReplay(this.files[0]);
-  });
+  //   // grab the first image in the FileList object and pass it to the function
+  //   loadReplay(this.files[0]);
+  // });
 
-  resize();
+  // resize();
 }
 window.start = start;
 

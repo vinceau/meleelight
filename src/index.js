@@ -1,3 +1,1 @@
-window.$ = require("jquery");
-require("howler");
-require("./main/loadscreen.js");
+require("./main/main.js");

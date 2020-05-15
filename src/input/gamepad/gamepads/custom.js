@@ -1,8 +1,10 @@
 // @flow
 
-import {getCookie, setCookie} from "../../../main/main";
-
 import type {GamepadInfo} from "../gamepadInfo";
+
+function getCookie() {}
+
+function setCookie() {}
 
 type CustomGamepadInfo = { gamepadInfo : GamepadInfo, fullID : string, name : string };
 

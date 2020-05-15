@@ -33,7 +33,6 @@ type Input = { a : bool
                     , rawY : number
                     , rawcsX : number
                     , rawcsY : number };
-type InputBuffer = Array<Input>;
 
 type InputList = [bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, number, number, number, number, number, number];
 
@@ -378,20 +377,6 @@ function pollGamepadInputs( gameMode : number, gamepadInfo : GamepadInfo
 
   return input;
 };
-
-function showButton(i : number, but : number, bool : bool) : void {
-};
-
-const keyboardMap = [
-  [102, 186],
-  [101, 76],
-  [100, 75],
-  [104, 79],
-  [103, 73],
-  [105, 80],
-  [107, 192, 222],
-  [109, 219], 71, 78, 66, 86
-];
 
 const customCenters = function() {
   this.ls = new Vec2D(0, 0);

@@ -543,9 +543,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
       if (tempBuffer[0].b || tempBuffer[1].b) {
         startGame();
       }
-      else {
-        endGame(inputBuffer);
-      }
     }
 
     interpretPause(pause[i][0], pause[i][1]);
@@ -557,9 +554,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
       && (!(tempBuffer[1].a && tempBuffer[1].l && tempBuffer[1].r && tempBuffer[1].s))) {
       if (tempBuffer[0].b) {
         startGame();
-      }
-      else {
-        endGame(inputBuffer);
       }
     }
 
@@ -1053,51 +1047,6 @@ function startGame() {
   });
   findingPlayers = false;
   playing = true;
-}
-
-function endGame(input) {
-  gameEnd = false;
-  resetLostStockQueue();
-  setPhantonQueue([]);
-  resetAArticles();
-  MusicManager.stopWhatisPlaying();
-  changeVolume(MusicManager, masterVolume[1], 1);
-  playing = false;
-  clearScreen();
-  drawStage();
-  setTokenPosSnapToChar(0);
-  setTokenPosSnapToChar(1);
-  setTokenPosSnapToChar(2);
-  setTokenPosSnapToChar(3);
-  if (gameMode == 3) {
-    // changeGamemode(2);
-    MusicManager.playMenuLoop();
-  } else if (gameMode == 5) {
-    if (targetTesting) {
-      // changeGamemode(4);
-    } else {
-      // changeGamemode(7);
-    }
-  }
-  pause = [[true, true], [true, true], [true, true], [true, true]];
-  frameAdvance = [
-    [true, true],
-    [true, true],
-    [true, true],
-    [true, true]
-  ];
-  findingPlayers = true;
-  positionPlayersInCSS();
-  for (var i = 0; i < 4; i++) {
-    if (playerType[i] > -1) {
-      //input[i][0].a = true; // do
-      //input[i][1].a = true; // not
-      player[i].inCSS = true;
-      player[i].phys.face = 1;
-      player[i].actionState = "WAIT";
-      player[i].timer = 0;
-    }
-  }
 }
 
 export function start() {

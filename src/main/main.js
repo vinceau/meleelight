@@ -1,17 +1,17 @@
 /* eslint-disable */
-import {choosingTag, drawCSSInit, cssControls, drawCSS} from 'menus/css';
+import {choosingTag, cssControls, drawCSS} from 'menus/css';
 import {playerObject} from 'main/player';
 import {keyMap} from 'settings';
 import {drawStartUp} from 'menus/startup';
-import {menuMove, drawMainMenuInit, drawMainMenu} from "menus/menu";
-import {drawStartScreenInit, drawStartScreen} from "menus/startscreen";
-import {drawBackgroundInit, drawStageInit, drawBackground, drawStage, setBackgroundType, createSnow} from "stages/stagerender";
-import {drawSSSInit, sssControls, drawSSS} from "menus/stageselect";
-import {drawAudioMenuInit, masterVolume, drawAudioMenu, audioMenuControls, getAudioCookies} from "menus/audiomenu";
-import {drawGameplayMenuInit, drawGameplayMenu, gameplayMenuControls, getGameplayCookies} from "menus/gameplaymenu";
-import {drawKeyboardMenuInit, keyboardMenuControls, drawKeyboardMenu, getKeyboardCookie} from "menus/keyboardmenu";
-import {drawControllerMenuInit, drawControllerMenu} from "menus/controllermenu";
-import {drawCreditsInit, credits, drawCredits} from "menus/credits";
+import {menuMove, drawMainMenu} from "menus/menu";
+import {drawStartScreen} from "menus/startscreen";
+import {drawBackground, drawStage, setBackgroundType, createSnow} from "stages/stagerender";
+import {sssControls, drawSSS} from "menus/stageselect";
+import {masterVolume, drawAudioMenu, audioMenuControls, getAudioCookies} from "menus/audiomenu";
+import {drawGameplayMenu, gameplayMenuControls, getGameplayCookies} from "menus/gameplaymenu";
+import {keyboardMenuControls, drawKeyboardMenu, getKeyboardCookie} from "menus/keyboardmenu";
+import {drawControllerMenu} from "menus/controllermenu";
+import {credits, drawCredits} from "menus/credits";
 import {renderForeground, renderPlayer, renderOverlay, resetLostStockQueue} from "main/render";
 
 import {actionStates} from "physics/actionStateShortcuts";
@@ -20,23 +20,22 @@ import {
   targetPlayer, targetHitDetection, targetTimerTick, targetTesting, medalsEarned,
   targetRecords, targetsDestroyed, targetStagePlaying , getTargetCookies , giveMedals, medalTimes
 } from "target/targetplay";
-import {tssControls, drawTSS, drawTSSInit, getTargetStageCookies} from "../stages/targetselect";
+import {tssControls, drawTSS, getTargetStageCookies} from "../stages/targetselect";
 import {targetBuilder, targetBuilderControls, renderTargetBuilder, showingCode} from "target/targetbuilder";
 import {destroyArticles, executeArticles, articlesHitDetection, executeArticleHits, renderArticles, resetAArticles} from "physics/article";
 import {runAI} from "main/ai";
 import {physics} from "physics/physics";
 import $ from 'jquery';
-import {toggleTransparency,getTransparency} from "main/vfx/transparency";
 import {drawVfx} from "main/vfx/drawVfx";
 import {resetVfxQueue} from "main/vfx/vfxQueue";
 import {setVsStage, getActiveStage, activeStage} from "../stages/activeStage";
-import {isShowSFX, toggleShowSFX} from "main/vfx";
+import {isShowSFX} from "main/vfx";
 import {renderVfx} from "./vfx/renderVfx";
 import {Box2D} from "./util/Box2D";
 import {Vec2D} from "./util/Vec2D";
-import {updateNetworkInputs, connectToMPRoom, retrieveNetworkInputs, giveInputs,connectToMPServer, syncGameMode} from "./multiplayer/streamclient";
-import {saveGameState, loadReplay, gameTickDelay} from "./replay";
-import {keyboardMap, showButton, nullInputs, pollInputs, inputData, setCustomCenters, nullInput} from "../input/input";
+import {updateNetworkInputs, giveInputs} from "./multiplayer/streamclient";
+import {saveGameState} from "./replay";
+import {nullInputs, pollInputs, nullInput} from "../input/input";
 import {deaden} from "../input/meleeInputs";
 import {getGamepadNameAndInfo} from "../input/gamepad/findGamepadInfo";
 import {customGamepadInfo} from "../input/gamepad/gamepads/custom";
@@ -136,8 +135,6 @@ let gameMode = 20;
 // 1:Main Menu
 // 0:Title Screen
 let versusMode = 0;
-
-const randomTags = ["NEO!","SELF","NOVA","PNDA","Panda","LFFN","Scorp","AZ","AXE","Tempo","TMPO","[A]rmada","WBALLZ","Westballz","PPMD","Kreygasm","M2K","Mang0","USA","SCAR","TOPH","(.Y.)","HBOX","HungryBox","PLUP","Shroomed","SFAT","Wizz","Lucky","S2J","SilentWolf","aMSa","S2J","Hax$"];
 
 const palettes = [["rgb(250, 89, 89)","rgb(255, 170, 170)","rgba(255, 206, 111, ","rgb(244, 68, 68)","rgba(255, 225, 167, "],
 ["rgb(95, 216, 84)","rgb(184, 253, 154)","rgba(252, 95, 95, ","rgb(255, 182, 96)","rgba(254, 141, 141, "],
@@ -538,42 +535,6 @@ function positionPlayersInCSS (){
 function changeGamemode (newGamemode){
   gameMode = newGamemode;
 }
-
-/*const addPlayer (i,gType,pType){
-  console.log(i,gType,pType);
-
-  currentPlayers.push(i);
-  if (pType == 0){
-    ports++;
-    mType[ports-1] = gType;
-    playerType[ports-1] = pType;
-
-    costumeTimeout.push(false);
-    pPal.push(ports-1);
-    buildPlayerObject(ports-1);
-    player[playerAmount-1].phys.pos = new Vec2D(-100+25*(playerAmount=1),-40);
-    player[ports-1].phys.face = 1;
-    player[ports-1].actionState = 0;
-    $("#currentPlayers").append('<div class="pBoxBox"><div class="playerBox" id="pBox'+(ports-1)+'" style="background-color:'+palettes[pPal[ports-1]][0]+';border:5px solid '+palettes[pPal[ports-1]][2]+'0.8)"><p>P'+ports+'<br><span class="cont">(Cont. '+i+')</span></p></div><div id="pTag'+(ports-1)+'" class="pTag"><textarea id="pTagEdit'+(ports-1)+'" class="pTagEdit" maxlength="10"></textarea></div></div>');
-  }
-  else {
-    mType[i] = gType;
-
-    costumeTimeout.push(false);
-    pPal.push(i);
-    buildPlayerObject(i);
-    player[playerAmount-1].phys.pos = new Vec2D(-100+25*(playerAmount=1),-40);
-    player[i].phys.face = 1;
-    player[i].actionState = 0;
-    $("#currentPlayers").append('<div class="pBoxBox"><div class="playerBox" id="pBox'+i+'" style="background-color:'+palettes[pPal[i]][0]+';border:5px solid '+palettes[pPal[i]][2]+'0.8)"><p>P'+(i+1)+'<br><span class="cont">(Cont. '+i+')</span></p></div><div id="pTag'+i+'" class="pTag"><textarea id="pTagEdit'+i+'" class="pTagEdit" maxlength="10"></textarea></div></div>');
-  }
-  playerAmount++;
-}
-
-const removePlayer (i){
-  playerType[i] = -1;
-  playerAmount--;
-}*/
 
 function interpretInputs  (i, active,playertype, inputBuffer) {
 
@@ -1028,25 +989,6 @@ function gameTick (oldInputBuffers){
       }
     }
   }
-  /*
-
-  var beforeWaster = performance.now();
-  // neeed to waste 0.666ms
-  var timeWasted = false;
-  var t = 0;
-  var o = performance.now();
-  while(!timeWasted){
-    var n = performance.now();
-    t += n - o;
-    //console.log(t);
-    if (t > 0.6666){
-      timeWasted = true;
-    }
-    o = n;
-    //console.log(".");
-  }
-  //console.log(performance.now() - beforeWaster);*/
-
     saveGameState(input,ports);
 
   setTimeout(gameTick, 16, input);
@@ -1393,43 +1335,6 @@ function finishGame (input){
   }, 2500);
 }
 
-function onFullScreenChange() {
-  var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-
-  // if in fullscreen mode fullscreenElement won't be null
-  var cont = document.getElementById("topButtonContainer");
-  var icn = document.querySelectorAll(".topButton");
-  if (fullscreenElement != null){
-    cont.style.transition = "opacity 0.5s linear 0s";
-    cont.style.opacity = 0;;
-    setTimeout(function(){
-        var i;
-        for (i = 0; i < icn.length; i++) {
-          icn[i].style.height = "5px";
-        }
-        cont.style.height = "5px";
-        resize();
-      }, 500);
-    $("#keyboardPrompt").hide();
-    $("#keyboardControlsImg").hide();
-    $("#controllerSupportContainer").hide();
-    $("#debugButtonEdit").empty().append("OFF");
-    $("#debug").hide();
-    $("#players").hide();
-    $("body").css("overflow", "hidden");
-    showHeader = false;
-  } else {
-    var i;
-    for (i = 0; i < icn.length; i++) {
-      icn[i].style.height = "25px";
-    }
-    cont.style.height = "31px";
-    cont.style.transition = "opacity 0.5s linear 0s";
-    cont.style.opacity = 1;
-  }
-}
-
-
 export function start (){
   console.log("starting...");
   if (holiday === 1){
@@ -1468,206 +1373,12 @@ export function start (){
   bg1.fillRect(0, 0, layers.BG1.width, layers.BG1.height);
   let nullInputBuffers =  [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
   gameTick(nullInputBuffers);
-  // renderTick();
-
-  // $("#effectsButton").click(function() {
-  //   if (isShowSFX()) {
-  //     $("#effectsButtonEdit").empty().append("OFF");
-  //   } else {
-  //     $("#effectsButtonEdit").empty().append("ON");
-  //   }
-  //   toggleShowSFX();
-  // });
-
-  // $("#fpsButton").click(function() {
-  //   if (fps30) {
-  //     $("#fpsButtonEdit").empty().append("60");
-  //   } else {
-  //     $("#fpsButtonEdit").empty().append("30");
-  //   }
-  //   fps30 ^= true;
-  // });
-
-  // $("#alphaButton").click(function() {
-  //   if (getTransparency()) {
-  //     $("#alphaButtonEdit").empty().append("OFF");
-  //   } else {
-  //     $("#alphaButtonEdit").empty().append("ON");
-  //   }
-  //     toggleTransparency();
-  // });
-
-  // $("#layerButton").hover(function() {
-  //   $("#layerDropdown").toggle();
-  // });
-
-  // $(".layer").click(function() {
-  //   var id = $(this).attr("id");
-  //   switch (id) {
-  //     case "layer1":
-  //       layerSwitches.BG1 ^= true;
-  //       $("#background1Canvas").toggle();
-  //       break;
-  //     case "layer2":
-  //       layerSwitches.BG2 ^= true;
-  //       $("#background2Canvas").toggle();
-  //       break;
-  //     case "layer3":
-  //       layerSwitches.FG1 ^= true;
-  //       $("#foreground1Canvas").toggle();
-  //       break;
-  //     case "layer4":
-  //       layerSwitches.FG2 ^= true;
-  //       $("#foreground2Canvas").toggle();
-  //       break;
-  //     case "layer5":
-  //       layerSwitches.UI ^= true;
-  //       $("#uiCanvas").toggle();
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   $(this).toggleClass("layerOn");
-  // });
-
-  // $("#debugButton").click(function() {
-  //   if (showDebug) {
-  //     for (let i = 0; i < 4; i++) {
-  //       document.getElementById("gamepadSVG"+i).style.display = "none";
-  //     }
-  //     $("#debugButtonEdit").empty().append("OFF");
-  //     $("#debug").hide();
-  //     $("#players").hide();
-  //     $("body").css("overflow", "hidden");
-  //     //var mY = Math.max(($(window).height()-750)/2,0);
-  //     //$("#display").css("margin",mY+"px 0px 0px "+mX+"px");
-  //   } else {
-  //     for (let i = 0; i < 4; i++) {
-  //       if (playerType[i] !== -1) {
-  //         updateGamepadSVGColour(i, "gamepadSVG"+i);
-  //         document.getElementById("gamepadSVG"+i).style.display = "";
-  //       }
-  //     }
-  //     $("#debugButtonEdit").empty().append("ON");
-  //     $("#debug").show();
-  //     $("#players").show();
-  //     $("body").css("overflow", "scroll");
-  //     //var mY = Math.max(($(window).height()-900)/2,0);
-  //     //$("#display").css("margin",mY+" 0px 0px px "+mX+"px");
-  //   }
-  //   showDebug ^= true;
-  //   resize();
-  // });
-
-  // $("#hideButton").click(function() {
-  //   $("#header").toggle();
-  //   showHeader ^= true;
-  //   resize();
-  // });
-
-  // $("#fullscreenButton").click(function() {
-  //   if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !
-  //       document.webkitIsFullScreen)) {
-  //     if (document.documentElement.requestFullScreen) {
-  //       document.documentElement.requestFullScreen();
-  //     } else if (document.documentElement.mozRequestFullScreen) {
-  //       document.documentElement.mozRequestFullScreen();
-  //     } else if (document.documentElement.webkitRequestFullScreen) {
-  //       document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-  //     }
-  //   } else {
-  //     if (document.cancelFullScreen) {
-  //       document.cancelFullScreen();
-  //     } else if (document.mozCancelFullScreen) {
-  //       document.mozCancelFullScreen();
-  //     } else if (document.webkitCancelFullScreen) {
-  //       document.webkitCancelFullScreen();
-  //     }
-  //   }
-  //   // resize();
-  // });
-
-  // document.addEventListener("fullscreenchange", onFullScreenChange, false);
-  // document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
-  // document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
-
-  // $(".topButton").hover(function() {
-  //   $(this).children(".buttonDetails").toggle();
-  // });
-
-  // if (mobile === false) {
-  //   $(".button").hover(function() {
-  //     $(this).toggleClass("buttonhighlighted");
-  //   });
-  //   $(".socialmedia").hover(function() {
-  //     $(this).toggleClass("socialmediahighlight");
-  //   });
-  //   $(".sugbtn").hover(function() {
-  //     $(this).toggleClass("sugbtnhighlight");
-  //   });
-  // }
-  // $("#appsButton").hover(function() {
-  //   $("#appsDropdown").show();
-  // }, function() {
-  //   $("#appsDropdown").hide();
-  // });
-  // if (holiday === 1){
-  //   $("#snowMinus").click(function() {
-  //     snowCount-=20;
-  //     if (snowCount < 0){
-  //       snowCount = 0;
-  //     }
-  //     $("#snowButtonEdit").text(snowCount);
-  //   });
-  //   $("#snowPlus").click(function() {
-  //     snowCount+=20;
-  //     if (snowCount > 1200){
-  //       snowCount = 1200;
-  //     }
-  //     $("#snowButtonEdit").text(snowCount);
-  //   });
-  // }
-
-  // $("#replay").change(function() {
-
-
-  //   // grab the first image in the FileList object and pass it to the function
-  //   loadReplay(this.files[0]);
-  // });
-
-  // resize();
 }
 window.start = start;
 
-function customDeadzone (){
-    this.ls = new Vec2D(0,0);
-    this.cs = new Vec2D(0,0);
-    this.l = 0;
-    this.r = 0;
-}
-
-function addShine (val){
-    shine += val;
-}
-function setShine (val){
-    shine = val;
-}
-function setFindingPlayers(val){
-  findingPlayers = val;
-}
-function setPlaying(val){
-  playing = val;
-}
 function setEndTargetGame(val){
     endTargetGame = val;
 }
-function setCreditsPlayer(val){
-  creditsPlayer =val;
-}
-function setCalibrationPlayer(val){
-  calibrationPlayer =val;
-}
-
 const dom = {};
 
 function cacheDom() {
@@ -1688,7 +1399,3 @@ function cacheDom() {
     dom[id] = document.getElementById(id);
   });
 };
-
-function setCS(index,val){
-  characterSelections[index] = val;
-}

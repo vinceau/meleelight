@@ -11,7 +11,7 @@ import type {GamepadInfo} from "./gamepad/gamepadInfo";
 import {replayActive, retrieveReplayInputs} from "../main/replay";
 import {retrieveNetworkInputs} from "../main/multiplayer/streamclient";
 
-export type Input = { a : bool
+type Input = { a : bool
                     , b : bool
                     , x : bool
                     , y : bool
@@ -33,11 +33,11 @@ export type Input = { a : bool
                     , rawY : number
                     , rawcsX : number
                     , rawcsY : number };
-export type InputBuffer = Array<Input>;
+type InputBuffer = Array<Input>;
 
 type InputList = [bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, number, number, number, number, number, number];
 
-export function inputData ( list : InputList = [false, false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0, 0, 0, 0] ) : Input {
+function inputData ( list : InputList = [false, false, false, false, false, false, false, false, false, false, false, false, 0, 0, 0, 0, 0, 0] ) : Input {
  return {
     a : list[0],
     b : list[1],
@@ -75,7 +75,7 @@ export const nullInputs = () => [ new inputData ( )
                                 , new inputData ( )
                                 , new inputData ( )
                                 ];
-export const aiPlayer1 = [ new inputData ( )
+const aiPlayer1 = [ new inputData ( )
                          , new inputData ( )
                          , new inputData ( )
                          , new inputData ( )
@@ -84,7 +84,7 @@ export const aiPlayer1 = [ new inputData ( )
                          , new inputData ( )
                          , new inputData ( )
                          ];
-export const aiPlayer2 =  [ new inputData ( )
+const aiPlayer2 =  [ new inputData ( )
                           , new inputData ( )
                           , new inputData ( )
                           , new inputData ( )
@@ -93,7 +93,7 @@ export const aiPlayer2 =  [ new inputData ( )
                           , new inputData ( )
                           , new inputData ( )
                           ];
-export const aiPlayer3 =  [ new inputData ( )
+const aiPlayer3 =  [ new inputData ( )
                           , new inputData ( )
                           , new inputData ( )
                           , new inputData ( )
@@ -103,7 +103,7 @@ export const aiPlayer3 =  [ new inputData ( )
                           , new inputData ( )
                           ];
 
-export const aiPlayer4 = [ new inputData ( )
+const aiPlayer4 = [ new inputData ( )
                          , new inputData ( )
                          , new inputData ( )
                          , new inputData ( )
@@ -113,7 +113,7 @@ export const aiPlayer4 = [ new inputData ( )
                          , new inputData ( )
                          ];
 
-export const aiInputBank = [aiPlayer1,aiPlayer2,aiPlayer3,aiPlayer4];
+const aiInputBank = [aiPlayer1,aiPlayer2,aiPlayer3,aiPlayer4];
 
 // should be able to move out the "frameByFrame" aspect of the following function
 // it is only used to make z button mean "left trigger value = 0.35" + "A = true".
@@ -379,10 +379,10 @@ function pollGamepadInputs( gameMode : number, gamepadInfo : GamepadInfo
   return input;
 };
 
-export function showButton(i : number, but : number, bool : bool) : void {
+function showButton(i : number, but : number, bool : bool) : void {
 };
 
-export const keyboardMap = [
+const keyboardMap = [
   [102, 186],
   [101, 76],
   [100, 75],
@@ -402,7 +402,7 @@ const customCenters = function() {
 
 const custcent = [new customCenters, new customCenters, new customCenters, new customCenters];
 
-export function setCustomCenters( i : number, ls0 : Vec2D, cs0 : Vec2D, l0 : number, r0 : number) : void {
+function setCustomCenters( i : number, ls0 : Vec2D, cs0 : Vec2D, l0 : number, r0 : number) : void {
   custcent[i].ls = ls0;
   custcent[i].cs = cs0;
   custcent[i].l = l0;

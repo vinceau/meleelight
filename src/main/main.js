@@ -1,8 +1,6 @@
 /* eslint-disable */
-import { playerObject } from 'main/player';
 import { keyMap } from 'settings';
 import { menuMove } from "menus/menu";
-import { Vec2D } from "./util/Vec2D";
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
 import { saveGameState } from "./replay";
 import { nullInputs, pollInputs, nullInput } from "../input/input";
@@ -14,8 +12,6 @@ import { updateGamepadSVGState, updateGamepadSVGColour, cycleGamepadColour } fro
 import { deepObjectMerge } from "./util/deepCopyObject";
 
 const player = [0, 0, 0, 0];
-const gamelogicTime = [5, 0, 100, 0];
-var characterSelections = [0, 0, 0, 0];
 let gameEnd = false;
 export let controllerResetCountdowns = [0, 0, 0, 0];
 let keyboardOccupied = false;
@@ -25,7 +21,6 @@ window.mType = [null, null, null, null];
 const mType = [null, null, null, null];
 const currentPlayers = [];
 const playerType = [-1, -1, -1, -1];
-const cpuDifficulty = [3, 3, 3, 3];
 let ports = 0;
 let playing = false;
 let frameByFrame = false;
@@ -49,13 +44,9 @@ let gameMode = 20;
 // 2:CSS
 // 1:Main Menu
 // 0:Title Screen
-let versusMode = 0;
 
 let pause = [[true, true], [true, true], [true, true], [true, true]];
 let frameAdvance = [[true, true], [true, true], [true, true], [true, true]];
-
-const startingPoint = [[-50, 50], [50, 50], [-25, 5], [25, 5]];
-const startingFace = [1, -1, 1, -1];
 
 let usingLocalStorage = false;
 if (typeof (Storage) !== "undefined") {
@@ -415,20 +406,8 @@ function gameTick(oldInputBuffers) {
 
 }
 
-function buildPlayerObject(i) {
-  player[i] = new playerObject(characterSelections[i], startingPoint[i], startingFace[i]);
-  player[i].phys.ECB1 = [new Vec2D(startingPoint[i].x, startingPoint[i].y), new Vec2D(startingPoint[i].x, startingPoint[i].y), new Vec2D(startingPoint[i].x, startingPoint[i].y), new Vec2D(startingPoint[i].x, startingPoint[i].y)];
-  player[i].phys.ECBp = [new Vec2D(startingPoint[i].x, startingPoint[i].y), new Vec2D(startingPoint[i].x, startingPoint[i].y), new Vec2D(startingPoint[i].x, startingPoint[i].y), new Vec2D(startingPoint[i].x, startingPoint[i].y)];
-  player[i].difficulty = cpuDifficulty[i];
-}
-
 export function start() {
   console.log("starting...");
-  for (var i = 0; i < 4; i++) {
-    buildPlayerObject(i);
-    player[i].phys.face = 1;
-    player[i].actionState = "WAIT";
-  }
   let nullInputBuffers = [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
   gameTick(nullInputBuffers);
 }

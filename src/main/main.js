@@ -257,8 +257,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
     else {
       controllerResetCountdowns[i] = 125;
     }
-
-    interpretPause(pause[i][0], pause[i][1]);
   }
   else { // AI
     tempBuffer[0].rawX = tempBuffer[0].lsX;
@@ -295,18 +293,11 @@ function interpretInputs(i, active, playertype, inputBuffer) {
 
 }
 
-function interpretPause(pause0, pause1) {}
-
 function gameTick(oldInputBuffers) {
-  var start = performance.now();
-  var diff = 0;
-
   let input = [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
-
   if (gameMode == 0 || gameMode == 20) {
     findPlayers();
   } else if (gameMode == 1) {
-    //console.log(playerType);
     for (var i = 0; i < ports; i++) {
       input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
     }

@@ -294,7 +294,6 @@ function matchTimerTick(input) {
   matchTimer -= 0.016667;
 
   if (matchTimer <= 0) {
-    finishGame(input);
   }
 }
 
@@ -1099,83 +1098,6 @@ function endGame(input) {
       player[i].timer = 0;
     }
   }
-}
-
-function finishGame(input) {
-  gameEnd = true;
-  playing = false;
-  fg2.save();
-  fg2.textAlign = "center";
-  var text = "Game!";
-  var size = 300;
-  var textScale = 1;
-  var textGrad = fg2.createLinearGradient(0, 200, 0, 520);
-  if (gameMode == 5 || gameMode == 8) {
-    if (activeStage.target.length == targetsDestroyed) {
-      if (!targetTesting) {
-        if (targetStagePlaying < 10) {
-          for (var i = 0; i < 3; i++) {
-            if (!medalsEarned[characterSelections[targetPlayer]][targetStagePlaying][i]) {
-              if (Math.round(matchTimer * 100) / 100 <= medalTimes[characterSelections[targetPlayer]][targetStagePlaying][i]) {
-                medalsEarned[characterSelections[targetPlayer]][targetStagePlaying][i] = true;
-              }
-            }
-          }
-        }
-        if (matchTimer < targetRecords[characterSelections[targetPlayer]][targetStagePlaying] || targetRecords[characterSelections[targetPlayer]][targetStagePlaying] == -1) {
-          targetRecords[characterSelections[targetPlayer]][targetStagePlaying] = matchTimer;
-          setCookie(characterSelections[targetPlayer] + "target" + targetStagePlaying, targetRecords[characterSelections[targetPlayer]][targetStagePlaying], 36500);
-        } else {
-        }
-      } else {
-      }
-      text = "Complete!";
-      size = 200;
-      textScale = 1.5;
-      var textGrad = fg2.createLinearGradient(0, 200 / textScale, 0, 520 / textScale);
-      textGrad.addColorStop(0, "black");
-      textGrad.addColorStop(0.4, "black");
-      textGrad.addColorStop(0.8, "rgb(150, 86, 46)");
-      textGrad.addColorStop(1, "rgb(205, 108, 45)");
-    } else {
-      text = "Failure";
-      size = 250;
-      textGrad.addColorStop(0, "black");
-      textGrad.addColorStop(0.5, "black");
-      textGrad.addColorStop(0.7, "rgb(51, 34, 251)");
-      textGrad.addColorStop(1, "rgb(107, 71, 250)");
-    }
-  } else {
-    if (matchTimer <= 0) {
-      text = "Time!";
-      textGrad.addColorStop(0, "black");
-      textGrad.addColorStop(0.5, "black");
-      textGrad.addColorStop(0.7, "rgb(21, 51, 180)");
-      textGrad.addColorStop(1, "rgb(71, 94, 250)");
-    } else {
-      textGrad.addColorStop(0, "black");
-      textGrad.addColorStop(0.4, "black");
-      textGrad.addColorStop(0.7, "rgb(167, 27, 40)");
-      textGrad.addColorStop(1, "rgb(255, 31, 52)");
-    }
-  }
-  fg2.scale(1, textScale);
-  fg2.fillStyle = textGrad;
-  fg2.lineWidth = 40;
-  fg2.strokeStyle = "black";
-  fg2.font = "900 " + size + "px Arial";
-  fg2.strokeText(text, 600, 470 / textScale);
-  fg2.lineWidth = 20;
-  fg2.strokeStyle = "white";
-  fg2.font = "900 " + size + "px Arial";
-  fg2.strokeText(text, 600, 470 / textScale);
-  fg2.font = "900 " + size + "px Arial";
-  fg2.fillText(text, 600, 470 / textScale);
-  fg2.restore();
-  MusicManager.stopWhatisPlaying();
-  setTimeout(function () {
-    endGame(input)
-  }, 2500);
 }
 
 export function start() {

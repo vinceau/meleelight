@@ -1,20 +1,15 @@
 /* eslint-disable */
-import { choosingTag } from 'menus/css';
 import { playerObject } from 'main/player';
 import { keyMap } from 'settings';
 import { menuMove } from "menus/menu";
 import { masterVolume } from "menus/audiomenu";
-import { getKeyboardCookie } from "menus/keyboardmenu";
 import { renderForeground } from "main/render";
-
 import { executeHits, hitDetect, checkPhantoms, resetHitQueue } from "physics/hitDetection";
-import { showingCode } from "target/targetbuilder";
 import { destroyArticles, executeArticles, articlesHitDetection, executeArticleHits } from "physics/article";
 import { runAI } from "main/ai";
 import { physics } from "physics/physics";
 import $ from 'jquery';
 import { getActiveStage } from "../stages/activeStage";
-import { Box2D } from "./util/Box2D";
 import { Vec2D } from "./util/Vec2D";
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
 import { saveGameState } from "./replay";
@@ -23,7 +18,7 @@ import { deaden } from "../input/meleeInputs";
 import { getGamepadNameAndInfo } from "../input/gamepad/findGamepadInfo";
 import { customGamepadInfo } from "../input/gamepad/gamepads/custom";
 import { buttonState } from "../input/gamepad/retrieveGamepadInputs";
-import { updateGamepadSVGState, updateGamepadSVGColour, setGamepadSVGColour, cycleGamepadColour } from "../input/gamepad/drawGamepad";
+import { updateGamepadSVGState, updateGamepadSVGColour, cycleGamepadColour } from "../input/gamepad/drawGamepad";
 import { deepObjectMerge } from "./util/deepCopyObject";
 
 const player = [0, 0, 0, 0];
@@ -95,13 +90,6 @@ window.addEventListener("gamepadconnected", function (e) {
     e.gamepad.buttons.length, e.gamepad.axes.length);
 });
 if (navigator.getGamepads) console.log(navigator.getGamepads());
-
-function matchTimerTick(input) {
-  matchTimer -= 0.016667;
-
-  if (matchTimer <= 0) {
-  }
-}
 
 const keys = {};
 
@@ -489,14 +477,6 @@ function gameTick(oldInputBuffers) {
     executeHits(input);
     articlesHitDetection();
     executeArticleHits(input);
-    if (!starting && !versusMode) {
-      matchTimerTick(input);
-    } else {
-      startTimer -= 0.01666667;
-      if (startTimer < 0) {
-        starting = false;
-      }
-    }
     if (frameByFrame) {
       frameByFrameRender = true;
       wasFrameByFrame = true;
@@ -549,7 +529,6 @@ export function start() {
     player[i].phys.face = 1;
     player[i].actionState = "WAIT";
   }
-  getKeyboardCookie();
   let nullInputBuffers = [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
   gameTick(nullInputBuffers);
 }

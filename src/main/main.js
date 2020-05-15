@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
+import { giveInputs } from "./multiplayer/streamclient";
 import { nullInputs, pollInputs, nullInput } from "../input/input";
 import { deaden } from "../input/meleeInputs";
 import { getGamepadNameAndInfo } from "../input/gamepad/findGamepadInfo";
@@ -284,7 +284,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
   if (giveInputs[i] === true) {
     //turns out keyboards leave gaps in the input buffer
     deepObjectMerge(true, nullInput(), tempBuffer[0]);
-    updateNetworkInputs(tempBuffer[0], i);
   }
   if (active) {
     if (tempBuffer[0].dl && !tempBuffer[1].dl) {

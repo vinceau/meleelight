@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { keyMap } from 'settings';
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
 import { nullInputs, pollInputs, nullInput } from "../input/input";
 import { deaden } from "../input/meleeInputs";
@@ -11,7 +10,6 @@ import { deepObjectMerge } from "./util/deepCopyObject";
 const player = [0, 0, 0, 0];
 let gameEnd = false;
 export let controllerResetCountdowns = [0, 0, 0, 0];
-let keyboardOccupied = false;
 let usingCustomControls = [false, false, false, false];
 let firstTimeDetected = [true, true, true, true];
 window.mType = [null, null, null, null];
@@ -23,7 +21,6 @@ let playing = false;
 let frameByFrame = false;
 let wasFrameByFrame = false;
 let findingPlayers = true;
-let showDebug = false;
 
 let gameMode = 20;
 // 20:Startup
@@ -70,27 +67,6 @@ const keys = {};
 
 function findPlayers() {
   var gps = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
-  /*if (typeof gps != "undefined"){
-    console.log(gps);
-  }*/
-  if (!keyboardOccupied) {
-    if (gameMode < 2 || gameMode == 20) {
-      if (keys[13] || keys[keyMap.s[0]] || keys[keyMap.s[1]]) {
-        if (ports < 4) {
-          changeGamemode(1);
-          keyboardOccupied = true;
-          addPlayer(ports, "keyboard");
-        }
-      }
-    } else {
-      if (keys[keyMap.a[0]] || keys[keyMap.a[1]]) {
-        if (ports < 4) {
-          keyboardOccupied = true;
-          addPlayer(ports, "keyboard");
-        }
-      }
-    }
-  }
   for (var i = 0; i < gps.length; i++) {
     var gamepad = navigator.getGamepads ? navigator.getGamepads()[i] : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads()[i] : null);
     if (playerType[i] === 2) {

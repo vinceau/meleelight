@@ -4,7 +4,6 @@ import {playerObject} from 'main/player';
 import {keyMap} from 'settings';
 import {drawStartUp} from 'menus/startup';
 import {menuMove, drawMainMenuInit, drawMainMenu} from "menus/menu";
-import {sounds} from "main/sfx";
 import {drawStartScreenInit, drawStartScreen} from "menus/startscreen";
 import {drawBackgroundInit, drawStageInit, drawBackground, drawStage, setBackgroundType, createSnow} from "stages/stagerender";
 import {drawSSSInit, sssControls, drawSSS} from "menus/stageselect";
@@ -31,7 +30,6 @@ import {toggleTransparency,getTransparency} from "main/vfx/transparency";
 import {drawVfx} from "main/vfx/drawVfx";
 import {resetVfxQueue} from "main/vfx/vfxQueue";
 import {setVsStage, getActiveStage, activeStage} from "../stages/activeStage";
-import {MusicManager} from "./music";
 import {isShowSFX, toggleShowSFX} from "main/vfx";
 import {renderVfx} from "./vfx/renderVfx";
 import {Box2D} from "./util/Box2D";
@@ -379,10 +377,6 @@ export function findPlayers (){
           changeGamemode(1);
           $("#keyboardPrompt").hide();
           keyboardOccupied = true;
-          sounds.menuForward.play();
-          if (ports == 0) {
-            MusicManager.playMenuLoop();
-          }
           addPlayer(ports, "keyboard");
         }
       }
@@ -449,10 +443,6 @@ export function findPlayers (){
               if (ports < 4) {
                 changeGamemode(1);
                 $("#keyboardPrompt").hide();
-                sounds.menuForward.play();
-                if (ports === 0) {
-                  MusicManager.playMenuLoop();
-                }
                 addPlayer(i, gpdInfo);
               }
             }
@@ -843,8 +833,6 @@ function interpretPause(pause0, pause1) {
     if (gameMode == 3 || gameMode == 5) {
       playing ^= true;
       if (!playing) {
-        sounds.pause.play();
-        changeVolume(MusicManager, masterVolume[1] * 0.3, 1);
         renderForeground();
       } else {
         changeVolume(MusicManager, masterVolume[1], 1);
@@ -1391,9 +1379,6 @@ export function endGame (input){
   positionPlayersInCSS();
   for (var i = 0; i < 4; i++) {
     if (playerType[i] > -1) {
-      if (player[i].actionState == "FURAFURA") {
-        sounds.furaloop.stop(player[i].furaLoopID);
-      }
       //input[i][0].a = true; // do
       //input[i][1].a = true; // not
       player[i].inCSS = true;
@@ -1428,13 +1413,10 @@ export function finishGame (input){
         }
         if (matchTimer < targetRecords[characterSelections[targetPlayer]][targetStagePlaying] || targetRecords[characterSelections[targetPlayer]][targetStagePlaying] == -1) {
           targetRecords[characterSelections[targetPlayer]][targetStagePlaying] = matchTimer;
-          sounds.newRecord.play();
           setCookie(characterSelections[targetPlayer] + "target" + targetStagePlaying, targetRecords[characterSelections[targetPlayer]][targetStagePlaying], 36500);
         } else {
-          sounds.complete.play();
         }
       } else {
-        sounds.complete.play();
       }
       text = "Complete!";
       size = 200;
@@ -1445,7 +1427,6 @@ export function finishGame (input){
       textGrad.addColorStop(0.8, "rgb(150, 86, 46)");
       textGrad.addColorStop(1, "rgb(205, 108, 45)");
     } else {
-      sounds.failure.play();
       text = "Failure";
       size = 250;
       textGrad.addColorStop(0, "black");
@@ -1456,13 +1437,11 @@ export function finishGame (input){
   } else {
     if (matchTimer <= 0) {
       text = "Time!";
-      sounds.time.play();
       textGrad.addColorStop(0, "black");
       textGrad.addColorStop(0.5, "black");
       textGrad.addColorStop(0.7, "rgb(21, 51, 180)");
       textGrad.addColorStop(1, "rgb(71, 94, 250)");
     } else {
-      sounds.game.play();
       textGrad.addColorStop(0, "black");
       textGrad.addColorStop(0.4, "black");
       textGrad.addColorStop(0.7, "rgb(167, 27, 40)");

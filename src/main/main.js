@@ -295,12 +295,6 @@ if (navigator.getGamepads) console.log(navigator.getGamepads());
 function matchTimerTick(input) {
   matchTimer -= 0.016667;
 
-  if (dom.matchMinutes && dom.matchSeconds) {
-    var sec = (matchTimer % 60).toFixed(2);
-    dom.matchMinutes.innerHTML = Math.floor(matchTimer / 60);
-    dom.matchSeconds.innerHTML = sec.length < 5 ? `0${sec}` : sec;
-  }
-
   if (matchTimer <= 0) {
     finishGame(input);
   }
@@ -839,10 +833,6 @@ function gameTick(oldInputBuffers) {
         if (diff > gamelogicTime[1]) {
           gamelogicTime[1] = diff;
         }
-        dom.gamelogicAvg.innerHTML = Math.round(gamelogicTime[0]);
-        dom.gamelogicHigh.innerHTML = Math.round(gamelogicTime[1]);
-        dom.gamelogicLow.innerHTML = Math.round(gamelogicTime[2]);
-        dom.gamelogicPeak.innerHTML = gamelogicTime[3];
       }
     } else {
       if (!gameEnd) {
@@ -909,10 +899,6 @@ function gameTick(oldInputBuffers) {
       if (diff > gamelogicTime[1]) {
         gamelogicTime[1] = diff;
       }
-      dom.gamelogicAvg.innerHTML = Math.round(gamelogicTime[0]);
-      dom.gamelogicHigh.innerHTML = Math.round(gamelogicTime[1]);
-      dom.gamelogicLow.innerHTML = Math.round(gamelogicTime[2]);
-      dom.gamelogicPeak.innerHTML = gamelogicTime[3];
     }
   } else if (findingPlayers) {
     findPlayers();
@@ -1000,10 +986,6 @@ function renderTick() {
           if (diff < renderTime[2]) {
             renderTime[2] = diff;
           }
-          dom.renderAvg.innerHTML = Math.round(renderTime[0]);
-          dom.renderHigh.innerHTML = Math.round(renderTime[1]);
-          dom.renderLow.innerHTML = Math.round(renderTime[2]);
-          dom.renderPeak.innerHTML = renderTime[3];
         }
       }
       else if (!gameEnd) {
@@ -1055,10 +1037,6 @@ function renderTick() {
           renderTime[2] = diff;
         }
 
-        dom.renderAvg.innerHTML = Math.round(renderTime[0]);
-        dom.renderHigh.innerHTML = Math.round(renderTime[1]);
-        dom.renderLow.innerHTML = Math.round(renderTime[2]);
-        dom.renderPeak.innerHTML = renderTime[3];
       }
     }
     if (frameByFrameRender) {
@@ -1100,7 +1078,6 @@ function initializePlayers(i, target) {
 
 function startGame() {
   setVsStage(stageSelect);
-  setBackgroundType(Math.round(Math.random()));
   if (holiday == 1) {
     createSnow();
   }
@@ -1280,7 +1257,6 @@ export function start() {
     player[i].phys.face = 1;
     player[i].actionState = "WAIT";
   }
-  cacheDom();
   getKeyboardCookie();
   getTargetCookies();
   giveMedals();
@@ -1294,18 +1270,6 @@ export function start() {
   $("#controllerButton").click(function () {
     $("#controllerSupportContainer").toggle();
   });
-  layers.BG1 = document.getElementById("background1Canvas");
-  bg1 = layers.BG1.getContext("2d");
-  layers.BG2 = document.getElementById("background2Canvas");
-  bg2 = layers.BG2.getContext("2d");
-  layers.FG1 = document.getElementById("foreground1Canvas");
-  fg1 = layers.FG1.getContext("2d");
-  layers.FG2 = document.getElementById("foreground2Canvas");
-  fg2 = layers.FG2.getContext("2d");
-  layers.UI = document.getElementById("uiCanvas");
-  ui = layers.UI.getContext("2d");
-  bg1.fillStyle = "rgb(0, 0, 0)";
-  bg1.fillRect(0, 0, layers.BG1.width, layers.BG1.height);
   let nullInputBuffers = [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
   gameTick(nullInputBuffers);
 }
@@ -1314,23 +1278,3 @@ window.start = start;
 function setEndTargetGame(val) {
   endTargetGame = val;
 }
-const dom = {};
-
-function cacheDom() {
-  const elementIds = [
-    "matchMinutes",
-    "matchSeconds",
-    "gamelogicAvg",
-    "gamelogicHigh",
-    "gamelogicLow",
-    "gamelogicPeak",
-    "renderAvg",
-    "renderHigh",
-    "renderLow",
-    "renderPeak",
-  ];
-
-  elementIds.forEach((id) => {
-    dom[id] = document.getElementById(id);
-  });
-};

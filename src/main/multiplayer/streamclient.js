@@ -33,9 +33,9 @@ let peerId = null;
 let connectionReady = false;
 let GAME_ID;
 let playerID;
-export let HOST_GAME_ID = null;
-export let inServerMode = false;
-export let meHost = false;
+let HOST_GAME_ID = null;
+let inServerMode = false;
+let meHost = false;
 let joinedGame = false;
 let lastRecievedPacket = 0;
 const usServer = 'wss://deepml.herokuapp.com:443';
@@ -100,7 +100,7 @@ if (localStorage.getItem('pickedServer') === 'america' || localStorage.getItem('
   localStorage.setItem('pickedServer', 'lan');
 }
 $("#lanIP").attr('value',localStorage.getItem('lastLANIP'));
-export function logIntoServer() {
+function logIntoServer() {
   meHost = true;
   if (localStorage.getItem('pickedServer') === 'america') {
     ds = deepstream(usServer).login(null, _onLoggedIn);
@@ -289,7 +289,7 @@ const playerInputBuffer = [nullInputs(), nullInputs(), nullInputs(), nullInputs(
 
 export const giveInputs = {};
 
-export function setNetInputFlag(name, val) {
+function setNetInputFlag(name, val) {
   giveInputs[name] = val;
 }
 
@@ -307,7 +307,7 @@ function sendInputsOverNet(inputBuffer, playerSlot) {
 
 }
 
-export function updateNetworkInputs(inputBuffer, playerSlot) {
+function updateNetworkInputs(inputBuffer, playerSlot) {
 
   playerInputBuffer[playerSlot][0] = inputBuffer;
 
@@ -315,19 +315,19 @@ export function updateNetworkInputs(inputBuffer, playerSlot) {
 
 }
 
-export function saveNetworkInputs(playerSlot, inputData) {
+function saveNetworkInputs(playerSlot, inputData) {
 
    playerInputBuffer[playerSlot][0] = decodeInput(inputData);
   //playerInputBuffer[playerSlot][0] = inputData;
 }
 
-export function retrieveNetworkInputs(playerSlot) {
+function retrieveNetworkInputs(playerSlot) {
   return playerInputBuffer[playerSlot][0];
 }
 
 
 //connect to global chat
-export function connectToMPServer() {
+function connectToMPServer() {
 
   logIntoServer();
 
@@ -519,7 +519,7 @@ function connectToUser(userName) {
 }
 
 
-export function syncCharacter(index, charSelection) {
+function syncCharacter(index, charSelection) {
   if (HOST_GAME_ID !== null) {
     ds.event.emit(HOST_GAME_ID + 'charSelection/', {"playerSlot": index, "charSelected": charSelection});
   }
@@ -537,26 +537,26 @@ export function syncCharacter(index, charSelection) {
   }
 }
 
-export function syncGameMode(gameMode) {
+function syncGameMode(gameMode) {
   if (HOST_GAME_ID !== null) {
     ds.event.emit(HOST_GAME_ID + 'gameMode/', {"gameMode": gameMode});
   }
 }
 
 
-export function syncStartGame(stageSelected) {
+function syncStartGame(stageSelected) {
   if (HOST_GAME_ID !== null) {
     ds.event.emit(HOST_GAME_ID + 'startGame/', {"stageSelected": stageSelected});
     ds.record.getRecord(HOST_GAME_ID + '-game').set('gameMode', gameMode);
   }
 }
 
-export function syncTagText(playerSlot, tagText) {
+function syncTagText(playerSlot, tagText) {
   if (HOST_GAME_ID !== null) {
     ds.event.emit(HOST_GAME_ID + 'setTag/', {"playerSlot": playerSlot, "tagText": tagText});
   }
 }
-export function syncMatchTimer(timer) {
+function syncMatchTimer(timer) {
   if (HOST_GAME_ID !== null) {
     ds.event.emit(HOST_GAME_ID + 'matchTimer/', {"matchTimer": timer});
   }

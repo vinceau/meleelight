@@ -3,13 +3,11 @@
 
 import {Vec2D} from "../main/util/Vec2D";
 import {keyMap} from "../settings";
-import {playing, controllerResetCountdowns} from "../main/main";
+import {controllerResetCountdowns} from "../main/main";
 import {buttonState, triggerValue, stickValue, dPadState } from "./gamepad/retrieveGamepadInputs";
-import {gamepadInfoList} from "./gamepad/gamepadInfoList";
-import {scaleToGCTrigger, scaleToMeleeAxes, scaleToUnitAxes, tasRescale, deaden} from "./meleeInputs";
-import $ from 'jquery';
+import {scaleToGCTrigger, scaleToMeleeAxes, tasRescale, deaden} from "./meleeInputs";
 
-import type {GamepadInfo, StickCardinals} from "./gamepad/gamepadInfo";
+import type {GamepadInfo} from "./gamepad/gamepadInfo";
 import {replayActive, retrieveReplayInputs} from "../main/replay";
 import {retrieveNetworkInputs} from "../main/multiplayer/streamclient";
 
@@ -382,14 +380,7 @@ function pollGamepadInputs( gameMode : number, gamepadInfo : GamepadInfo
 };
 
 export function showButton(i : number, but : number, bool : bool) : void {
-  if (bool) {
-    $("#" + i + "button" + but).show();
-  }
-  else {
-    $("#" + i + "button" + but).hide();
-  }
 };
-
 
 export const keyboardMap = [
   [102, 186],

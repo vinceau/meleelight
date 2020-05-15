@@ -1,15 +1,12 @@
 /*eslint-disable*/
 import {nullInputs} from "../../input/input";
-import {encodeInput, decodeInput} from "./encode";
+import {decodeInput} from "./encode";
 import deepstream from 'deepstream.io-client-js';
 import {
-  setPlayerType,
   ports,
   addPlayer,
   currentPlayers,
-  mType,
-  setMtype,
-  setCurrentPlayer, player
+  player
   , setCS
   , changeGamemode
   , setStageSelect
@@ -22,24 +19,14 @@ import {
 } from "../main";
 import {deepObjectMerge} from "../util/deepCopyObject";
 import {setChosenChar, setChoosingTag} from "../../menus/css";
-import {gameSettings, updateGameSettings} from "../../settings";
+import {gameSettings} from "../../settings";
 import {updateGameTickDelay} from "../replay";
 
-
 let ds = null;
-let peerId = null;
-let connectionReady = false;
 let GAME_ID;
 let playerID;
 let HOST_GAME_ID = null;
-let inServerMode = false;
-let meHost = false;
-let joinedGame = false;
 let lastRecievedPacket = 0;
-const usServer = 'wss://deepml.herokuapp.com:443';
-const eurServer = 'wss://deepmleur.herokuapp.com:443';
-let pickedServer = 'america';
-let packetNumber = 0;
 
 if (localStorage.getItem('pickedServer') === 'america' || localStorage.getItem('pickedServer') === null) {
   localStorage.setItem('pickedServer', 'america');
@@ -47,20 +34,6 @@ if (localStorage.getItem('pickedServer') === 'america' || localStorage.getItem('
   localStorage.setItem('pickedServer', 'europe');
 } else {
   localStorage.setItem('pickedServer', 'lan');
-}
-function logIntoServer() {
-  meHost = true;
-  if (localStorage.getItem('pickedServer') === 'america') {
-    ds = deepstream(usServer).login(null, _onLoggedIn);
-  } else if (localStorage.getItem('pickedServer') === 'europe') {
-    ds = deepstream(eurServer).login(null, _onLoggedIn);
-  } else {
-    if(localStorage.getItem('lastLANIP') === null || localStorage.getItem('lastLANIP') === "" ){
-      localStorage.setItem('lastLANIP', "localhost");
-    }
-    ds = deepstream(localStorage.getItem('lastLANIP')+":6020").login(null, _onLoggedIn);
-  }
-
 }
 
 function getPlayerStatusRecord(playerID) {
@@ -199,11 +172,6 @@ function startRoom() {
     });
 
   });
-}
-
-function _onLoggedIn() {
-  connectionReady = true;
-  startRoom();
 }
 
 const playerStatusRecords = {};

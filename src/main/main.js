@@ -2,14 +2,7 @@
 import { playerObject } from 'main/player';
 import { keyMap } from 'settings';
 import { menuMove } from "menus/menu";
-import { masterVolume } from "menus/audiomenu";
-import { renderForeground } from "main/render";
-import { executeHits, hitDetect, checkPhantoms, resetHitQueue } from "physics/hitDetection";
-import { destroyArticles, executeArticles, articlesHitDetection, executeArticleHits } from "physics/article";
-import { runAI } from "main/ai";
-import { physics } from "physics/physics";
 import $ from 'jquery';
-import { getActiveStage } from "../stages/activeStage";
 import { Vec2D } from "./util/Vec2D";
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
 import { saveGameState } from "./replay";
@@ -64,11 +57,6 @@ let frameAdvance = [[true, true], [true, true], [true, true], [true, true]];
 
 const startingPoint = [[-50, 50], [50, 50], [-25, 5], [25, 5]];
 const startingFace = [1, -1, 1, -1];
-
-let starting = true;
-let startTimer = 1.5;
-//matchTimer = 5999.99;
-let matchTimer = 480;
 
 let usingLocalStorage = false;
 if (typeof (Storage) !== "undefined") {
@@ -404,25 +392,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
 }
 
 function interpretPause(pause0, pause1) {}
-
-function update(i, inputBuffers) {
-  if (!starting) {
-    if (currentPlayers[i] != -1) {
-      if (playerType[i] == 0) {
-        // do nothing, use the provided player i inputs
-      }
-      else if (playerType[i] === 1) {
-        if (player[i].actionState != "SLEEP") {
-          runAI(i); // no need to return input since polling returns ai input if they are active
-        }
-      }
-    }
-  }
-  physics(i, inputBuffers);
-}
-
-let lastUpdate = performance.now();
-
 
 function gameTick(oldInputBuffers) {
   var start = performance.now();

@@ -1,6 +1,5 @@
 /*eslint-disable*/
-import $ from 'jquery';
-import {nullInputs, nullInput} from "../../input/input";
+import {nullInputs} from "../../input/input";
 import {encodeInput, decodeInput} from "./encode";
 import deepstream from 'deepstream.io-client-js';
 import {
@@ -22,8 +21,7 @@ import {
   , characterSelections
 } from "../main";
 import {deepObjectMerge} from "../util/deepCopyObject";
-import {setTokenPosSnapToChar, setChosenChar, setChoosingTag} from "../../menus/css";
-import pako from 'pako';
+import {setChosenChar, setChoosingTag} from "../../menus/css";
 import {gameSettings, updateGameSettings} from "../../settings";
 import {updateGameTickDelay} from "../replay";
 
@@ -43,63 +41,13 @@ const eurServer = 'wss://deepmleur.herokuapp.com:443';
 let pickedServer = 'america';
 let packetNumber = 0;
 
-$("#america").on("click", function () {
-  localStorage.setItem('pickedServer', 'america');
-  $("#europe").attr('checked', false);
-  $("#localGame").attr('checked', false);
-  ds = deepstream(usServer).login(null, _onLoggedIn);
-  GAME_ID = ds.getUid().replace("-", "");
-  playerID = ds.getUid().replace("-", "");
-
-});
-
-$("#europe").on("click", function () {
-  localStorage.setItem('pickedServer', 'europe');
-  $("#america").attr('checked', false);
-  $("#localGame").attr('checked', false);
-  ds = deepstream(eurServer).login(null, _onLoggedIn);
-  GAME_ID = ds.getUid().replace("-", "");
-  playerID = ds.getUid().replace("-", "");
-
-});
-$("#localGame").on("click", function () {
-  localStorage.setItem('pickedServer', 'lan');
-  $("#america").attr('checked', false);
-  $("#europe").attr('checked', false);
-  ds = deepstream(localStorage.getItem('lastLANIP')+":6020").login(null, _onLoggedIn);
-  GAME_ID = ds.getUid().replace("-", "");
-  playerID = ds.getUid().replace("-", "");
-
-});
-$("#lanIP").on("click", function () {
-  var hostIP = prompt("Hosts's IP ADDRESS (enter nothing or localhost to be host):");
-  $("#lanIP").attr("value", hostIP);
-  $("#america").attr('checked', false);
-  $("#europe").attr('checked', false);
-  $("#localGame").attr('checked', true);
-  if (hostIP === null || hostIP === undefined || hostIP === "" || hostIP === "localhost") {
-    localStorage.setItem('lastLANIP', "localhost");
-  }
-  localStorage.setItem('lastLANIP', hostIP);
-  console.log("server set to :" + localStorage.getItem('lastLANIP')+":6020");
-});
 if (localStorage.getItem('pickedServer') === 'america' || localStorage.getItem('pickedServer') === null) {
-  $("#america").attr('checked', true);
-  $("#europe").attr('checked', false);
-  $("#localGame").attr('checked', false);
   localStorage.setItem('pickedServer', 'america');
 } else if (localStorage.getItem('pickedServer') === 'europe') {
-  $("#europe").attr('checked', true);
-  $("#america").attr('checked', false);
-  $("#localGame").attr('checked', false);
   localStorage.setItem('pickedServer', 'europe');
 } else {
-  $("#europe").attr('checked', false);
-  $("#america").attr('checked', false);
-  $("#localGame").attr('checked', true);
   localStorage.setItem('pickedServer', 'lan');
 }
-$("#lanIP").attr('value',localStorage.getItem('lastLANIP'));
 function logIntoServer() {
   meHost = true;
   if (localStorage.getItem('pickedServer') === 'america') {
@@ -109,7 +57,6 @@ function logIntoServer() {
   } else {
     if(localStorage.getItem('lastLANIP') === null || localStorage.getItem('lastLANIP') === "" ){
       localStorage.setItem('lastLANIP', "localhost");
-      $("#lanIP").attr('value',localStorage.getItem('lastLANIP'));
     }
     ds = deepstream(localStorage.getItem('lastLANIP')+":6020").login(null, _onLoggedIn);
   }
@@ -142,7 +89,6 @@ function startRoom() {
     }
 //apply this to the front end at some point
     console.log("connection status : " + cssClass);
-    $("#connstatus").css('background-color', cssClass);
   });
 
   ds.record.getRecord(GAME_ID + '-game').whenReady(statusRecord => {
@@ -155,7 +101,6 @@ function startRoom() {
       "characterSelections": characterSelections,
     });
     playerStatusRecords[playerID] = statusRecord.get();
-    $('#mpcode').prop("value", GAME_ID);
 
     let playerPayload = deepObjectMerge(true, {}, player[getPlayerStatusRecord(playerID).ports - 1],exclusions);
 
@@ -236,16 +181,6 @@ function startRoom() {
       if (data) {
         setStageSelect(data.stageSelected);
         ds.record.getRecord(GAME_ID + 'totalPlayers').set('stageSelect', data.stageSelected);
-        $("#pTagEdit" + 0).hide();
-        $("#pTagEdit" + 1).hide();
-        $("#pTagEdit" + 2).hide();
-        $("#pTagEdit" + 3).hide();
-        $("#pTagEdit" + 4).hide();
-        $("#pTagEdit" + 0).blur();
-        $("#pTagEdit" + 1).blur();
-        $("#pTagEdit" + 2).blur();
-        $("#pTagEdit" + 3).blur();
-        $("#pTagEdit" + 4).blur();
         document.getSelection().removeAllRanges();
         setChoosingTag(-1);
         startGame();
@@ -270,15 +205,7 @@ function startRoom() {
 function _onLoggedIn() {
   connectionReady = true;
   startRoom();
-
-  $("#joinServer").on('click', (e) => {
-    meHost = false;
-    var destId = prompt("Host's peer ID:");
-    connectToUser(destId);
-  });
 }
-
-let hostRoom = null;
 
 const connectedPeers = {};
 const peerConnections = {};
@@ -561,5 +488,3 @@ function syncMatchTimer(timer) {
     ds.event.emit(HOST_GAME_ID + 'matchTimer/', {"matchTimer": timer});
   }
 }
-
-

@@ -653,59 +653,9 @@ function gameTick(oldInputBuffers) {
       input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
       menuMove(i, input);
     }
-  } else if (gameMode == 10) {
-    for (var i = 0; i < ports; i++) {
-      input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-      audioMenuControls(i, input);
-    }
-  } else if (gameMode == 11) {
-    for (var i = 0; i < ports; i++) {
-      input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-      gameplayMenuControls(i, input);
-    }
-  } else if (gameMode == 12) {
-    for (var i = 0; i < ports; i++) {
-      input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-      keyboardMenuControls(i, input);
-    }
-  } else if (gameMode == 13) {
-    input[creditsPlayer] = interpretInputs(creditsPlayer, true, playerType[creditsPlayer], oldInputBuffers[creditsPlayer]);
-    credits(creditsPlayer, input);
-  } else if (gameMode == 14) {
-    // controller calibration
-    input[calibrationPlayer] = interpretInputs(calibrationPlayer, true, playerType[calibrationPlayer], oldInputBuffers[calibrationPlayer]);
-  } else if (gameMode == 15) {
-    for (var i = 0; i < ports; i++) {
-      input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-      menuMove(i, input);
-    }
-  } else if (gameMode == 2) {
-    for (var i = 0; i < 4; i++) {
-      if (i < ports) {
-        input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-        cssControls(i, input);
-      }
-
-      actionStates[characterSelections[i]][player[i].actionState].main(i, input);
-    }
-    for (var i = 0; i < 4; i++) {
-      if (playerType[i] > -1) {
-        hitDetect(i, input);
-      }
-    }
-    executeHits(input);
-    resetHitQueue();
-    findPlayers();
   } else if (playing || frameByFrame) {
-    //console.log("test0");
-    /*delta = timestamp - lastFrameTimeMs; // get the delta time since last frame
-    lastFrameTimeMs = timestamp;
-    console.log(delta);*/
     var now = performance.now();
     var dt = now - lastUpdate;
-
-    //console.log(now);
-    //console.log(dt);
     lastUpdate = now;
 
     resetHitQueue();

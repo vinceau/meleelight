@@ -2,7 +2,6 @@
 import { playerObject } from 'main/player';
 import { keyMap } from 'settings';
 import { menuMove } from "menus/menu";
-import $ from 'jquery';
 import { Vec2D } from "./util/Vec2D";
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
 import { saveGameState } from "./replay";
@@ -91,7 +90,6 @@ function findPlayers() {
       if (keys[13] || keys[keyMap.s[0]] || keys[keyMap.s[1]]) {
         if (ports < 4) {
           changeGamemode(1);
-          $("#keyboardPrompt").hide();
           keyboardOccupied = true;
           addPlayer(ports, "keyboard");
         }
@@ -158,7 +156,6 @@ function findPlayers() {
             if (!alreadyIn) {
               if (ports < 4) {
                 changeGamemode(1);
-                $("#keyboardPrompt").hide();
                 addPlayer(i, gpdInfo);
               }
             }
@@ -321,8 +318,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
       if (controllerResetCountdowns[i] === 0) {
         // triggers code in input.js
         console.log("Controller #" + (i + 1) + " was reset!");
-        $("#resetIndicator" + i).fadeIn(100);
-        $("#resetIndicator" + i).fadeOut(500);
       }
     }
     else {
@@ -343,12 +338,6 @@ function interpretInputs(i, active, playertype, inputBuffer) {
   }
 
   if (showDebug) {
-    $("#lsAxisX" + i).empty().append(tempBuffer[0].lsX.toFixed(3));
-    $("#lsAxisY" + i).empty().append(tempBuffer[0].lsY.toFixed(3));
-    $("#csAxisX" + i).empty().append(tempBuffer[0].csX.toFixed(3));
-    $("#csAxisY" + i).empty().append(tempBuffer[0].csY.toFixed(3));
-    $("#lAnalog" + i).empty().append(tempBuffer[0].lA.toFixed(3));
-    $("#rAnalog" + i).empty().append(tempBuffer[0].rA.toFixed(3));
     updateGamepadSVGState(i, "gamepadSVG" + i, tempBuffer[0]);
   }
 

@@ -85,27 +85,8 @@ if (typeof (Storage) !== "undefined") {
   console.log("local storage does not work");
 }
 
-export function setCookie(cname, cvalue, exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  var exp = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + "; " + exp;
-  localStorage.setItem(cname, cvalue);
-}
-
 export function getCookie(cname) {
-  if (usingLocalStorage) {
-    return localStorage.getItem(cname);
-  } else {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1);
-      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return "";
-  }
+  return "";
 }
 
 window.addEventListener("gamepadconnected", function (e) {
@@ -239,24 +220,6 @@ function addPlayer(i, controllerInfo) {
     currentPlayers[ports - 1] = i;
     playerType[ports - 1] = 0;
     mType[ports - 1] = controllerInfo;
-    if (showDebug) {
-      updateGamepadSVGColour(i, "gamepadSVG" + i);
-      document.getElementById("gamepadSVG" + i).style.display = "";
-    }
-  }
-}
-
-function togglePort(i) {
-  playerType[i]++;
-  if (playerType[i] == 3) {
-    playerType[i] = -1;
-    if (showDebug) {
-      document.getElementById("gamepadSVG" + i).style.display = "none";
-    }
-  }
-  if (playerType[i] == 0 && ports <= i) {
-    playerType[i] = 1;
-    setGamepadSVGColour(i, "black");
     if (showDebug) {
       updateGamepadSVGColour(i, "gamepadSVG" + i);
       document.getElementById("gamepadSVG" + i).style.display = "";

@@ -1,11 +1,12 @@
 /* eslint-disable */
-import { giveInputs } from "./multiplayer/streamclient";
 import { nullInputs, pollInputs, nullInput } from "../input/input";
 import { deaden } from "../input/meleeInputs";
 import { getGamepadNameAndInfo } from "../input/gamepad/findGamepadInfo";
 import { customGamepadInfo } from "../input/gamepad/gamepads/custom";
 import { buttonState } from "../input/gamepad/retrieveGamepadInputs";
 import { deepObjectMerge } from "./util/deepCopyObject";
+
+const giveInputs = {};
 
 const player = [0, 0, 0, 0];
 export let controllerResetCountdowns = [0, 0, 0, 0];

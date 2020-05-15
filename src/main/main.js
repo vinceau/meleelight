@@ -1,36 +1,19 @@
 /* eslint-disable */
-import { choosingTag, cssControls, drawCSS } from 'menus/css';
+import { choosingTag } from 'menus/css';
 import { playerObject } from 'main/player';
 import { keyMap } from 'settings';
-import { drawStartUp } from 'menus/startup';
-import { menuMove, drawMainMenu } from "menus/menu";
-import { drawStartScreen } from "menus/startscreen";
-import { drawBackground, drawStage, setBackgroundType, createSnow } from "stages/stagerender";
-import { sssControls, drawSSS } from "menus/stageselect";
-import { masterVolume, drawAudioMenu, audioMenuControls, getAudioCookies } from "menus/audiomenu";
-import { drawGameplayMenu, gameplayMenuControls, getGameplayCookies } from "menus/gameplaymenu";
-import { keyboardMenuControls, drawKeyboardMenu, getKeyboardCookie } from "menus/keyboardmenu";
-import { drawControllerMenu } from "menus/controllermenu";
-import { credits, drawCredits } from "menus/credits";
-import { renderForeground, renderPlayer, renderOverlay, resetLostStockQueue } from "main/render";
+import { menuMove } from "menus/menu";
+import { masterVolume } from "menus/audiomenu";
+import { getKeyboardCookie } from "menus/keyboardmenu";
+import { renderForeground } from "main/render";
 
-import { actionStates } from "physics/actionStateShortcuts";
-import { executeHits, hitDetect, checkPhantoms, resetHitQueue, setPhantonQueue } from "physics/hitDetection";
-import {
-  targetPlayer, targetHitDetection, targetTimerTick, targetTesting, medalsEarned,
-  targetRecords, targetsDestroyed, targetStagePlaying, getTargetCookies, giveMedals, medalTimes
-} from "target/targetplay";
-import { tssControls, drawTSS, getTargetStageCookies } from "../stages/targetselect";
-import { targetBuilder, targetBuilderControls, renderTargetBuilder, showingCode } from "target/targetbuilder";
-import { destroyArticles, executeArticles, articlesHitDetection, executeArticleHits, renderArticles, resetAArticles } from "physics/article";
+import { executeHits, hitDetect, checkPhantoms, resetHitQueue } from "physics/hitDetection";
+import { showingCode } from "target/targetbuilder";
+import { destroyArticles, executeArticles, articlesHitDetection, executeArticleHits } from "physics/article";
 import { runAI } from "main/ai";
 import { physics } from "physics/physics";
 import $ from 'jquery';
-import { drawVfx } from "main/vfx/drawVfx";
-import { resetVfxQueue } from "main/vfx/vfxQueue";
-import { setVsStage, getActiveStage, activeStage } from "../stages/activeStage";
-import { isShowSFX } from "main/vfx";
-import { renderVfx } from "./vfx/renderVfx";
+import { getActiveStage } from "../stages/activeStage";
 import { Box2D } from "./util/Box2D";
 import { Vec2D } from "./util/Vec2D";
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
@@ -42,63 +25,25 @@ import { customGamepadInfo } from "../input/gamepad/gamepads/custom";
 import { buttonState } from "../input/gamepad/retrieveGamepadInputs";
 import { updateGamepadSVGState, updateGamepadSVGColour, setGamepadSVGColour, cycleGamepadColour } from "../input/gamepad/drawGamepad";
 import { deepObjectMerge } from "./util/deepCopyObject";
-import { setTokenPosSnapToChar } from "../menus/css";
-/*globals performance*/
-
-const holiday = 0;
-var snowCount = 150;
 
 const player = [0, 0, 0, 0];
-const renderTime = [10, 0, 100, 0];
 const gamelogicTime = [5, 0, 100, 0];
-const framerate = [0, 0, 0];
 var characterSelections = [0, 0, 0, 0];
-
-var shine = 0.5;
-
-let creditsPlayer = 0;
-let calibrationPlayer = 0;
-
 let gameEnd = false;
 export let controllerResetCountdowns = [0, 0, 0, 0];
-function setControllerReset(i) {
-  controllerResetCountdowns[i] = 0;
-}
-
 let keyboardOccupied = false;
-
 let usingCustomControls = [false, false, false, false];
-
 let firstTimeDetected = [true, true, true, true];
-
 window.mType = [null, null, null, null];
-
-
 const mType = [null, null, null, null];
-
 const currentPlayers = [];
-
-function setCurrentPlayer(index, val) {
-  currentPlayers[index] = val;
-}
-
-const playerAmount = 0;
-
 const playerType = [-1, -1, -1, -1];
-
 const cpuDifficulty = [3, 3, 3, 3];
-
 let ports = 0;
-const activePorts = [];
-
 let playing = false;
-
 let frameByFrame = false;
 let wasFrameByFrame = false;
-let frameByFrameRender = false;
-
 let findingPlayers = true;
-
 let showDebug = false;
 
 let gameMode = 20;
@@ -119,12 +64,6 @@ let gameMode = 20;
 // 0:Title Screen
 let versusMode = 0;
 
-const hasTag = [false, false, false, false];
-const tagText = ["", "", "", ""];
-function setTagText(index, value) {
-  tagText[index] = value;
-  hasTag[index] = true;
-}
 let pause = [[true, true], [true, true], [true, true], [true, true]];
 let frameAdvance = [[true, true], [true, true], [true, true], [true, true]];
 

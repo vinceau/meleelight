@@ -8,7 +8,6 @@ import { buttonState } from "../input/gamepad/retrieveGamepadInputs";
 import { deepObjectMerge } from "./util/deepCopyObject";
 
 const player = [0, 0, 0, 0];
-let gameEnd = false;
 export let controllerResetCountdowns = [0, 0, 0, 0];
 let usingCustomControls = [false, false, false, false];
 let firstTimeDetected = [true, true, true, true];
@@ -304,12 +303,10 @@ function gameTick(oldInputBuffers) {
   } else if (findingPlayers) {
     findPlayers();
   } else {
-    if (!gameEnd) {
-      for (var i = 0; i < 4; i++) {
-        if (playerType[i] == 0 || playerType[i] == 2) {
-          if (currentPlayers[i] != -1) {
-            input[i] = interpretInputs(i, false, playerType[i], oldInputBuffers[i]);
-          }
+    for (var i = 0; i < 4; i++) {
+      if (playerType[i] == 0 || playerType[i] == 2) {
+        if (currentPlayers[i] != -1) {
+          input[i] = interpretInputs(i, false, playerType[i], oldInputBuffers[i]);
         }
       }
     }

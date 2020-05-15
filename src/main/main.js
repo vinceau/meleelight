@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { nullInputs, pollInputs, nullInput } from "../input/input";
+import { controllerResetCountdowns, nullInputs, pollInputs, nullInput } from "../input/input";
 import { deaden } from "../input/meleeInputs";
 import { getGamepadNameAndInfo } from "../input/gamepad/findGamepadInfo";
 import { customGamepadInfo } from "../input/gamepad/gamepads/custom";
@@ -9,7 +9,6 @@ import { deepObjectMerge } from "./util/deepCopyObject";
 const giveInputs = {};
 
 const player = [0, 0, 0, 0];
-export let controllerResetCountdowns = [0, 0, 0, 0];
 let usingCustomControls = [false, false, false, false];
 let firstTimeDetected = [true, true, true, true];
 window.mType = [null, null, null, null];

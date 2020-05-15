@@ -2,11 +2,12 @@
 // @flow
 
 import {Vec2D} from "../main/util/Vec2D";
-import {controllerResetCountdowns} from "../main/main";
 import {buttonState, triggerValue, stickValue, dPadState } from "./gamepad/retrieveGamepadInputs";
 import {scaleToGCTrigger, scaleToMeleeAxes, deaden} from "./meleeInputs";
 
 import type {GamepadInfo} from "./gamepad/gamepadInfo";
+
+export const controllerResetCountdowns = [0, 0, 0, 0];
 
 type Input = { a : bool
                     , b : bool

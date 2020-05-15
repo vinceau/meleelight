@@ -2,11 +2,10 @@
 import { controllerResetCountdowns, nullInputs, pollInputs, nullInput } from "../input/input";
 import { deaden } from "../input/meleeInputs";
 import { getGamepadNameAndInfo } from "../input/gamepad/findGamepadInfo";
-import { GamepadInfo } from "../input/gamepad/gamepadInfo";
+import { customGamepadInfo } from "../input/gamepad/gamepads/custom";
 import { buttonState } from "../input/gamepad/retrieveGamepadInputs";
 import { deepObjectMerge } from "./util/deepCopyObject";
 
-const customGamepadInfo : Array<null | GamepadInfo> = [null, null, null, null];
 const giveInputs = {};
 
 const player = [0, 0, 0, 0];
@@ -41,6 +40,10 @@ let gameMode = 20;
 
 let pause = [[true, true], [true, true], [true, true], [true, true]];
 let frameAdvance = [[true, true], [true, true], [true, true], [true, true]];
+
+export function getCookie(cname) {
+  return "";
+}
 
 window.addEventListener("gamepadconnected", function (e) {
   console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",

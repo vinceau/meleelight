@@ -1,6 +1,5 @@
 /* eslint-disable */
 import { keyMap } from 'settings';
-import { menuMove } from "menus/menu";
 import { updateNetworkInputs, giveInputs } from "./multiplayer/streamclient";
 import { saveGameState } from "./replay";
 import { nullInputs, pollInputs, nullInput } from "../input/input";
@@ -369,7 +368,6 @@ function gameTick(oldInputBuffers) {
     //console.log(playerType);
     for (var i = 0; i < ports; i++) {
       input[i] = interpretInputs(i, true, playerType[i], oldInputBuffers[i]);
-      menuMove(i, input);
     }
   } else if (findingPlayers) {
     findPlayers();

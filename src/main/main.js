@@ -975,23 +975,6 @@ function buildPlayerObject(i) {
   player[i].difficulty = cpuDifficulty[i];
 }
 
-
-
-function initializePlayers(i, target) {
-  buildPlayerObject(i);
-  if (target) {
-    drawVfx({
-      name: "entrance",
-      pos: new Vec2D(activeStage.startingPoint[0].x, activeStage.startingPoint[0].y)
-    });
-  } else {
-    drawVfx({
-      name: "entrance",
-      pos: new Vec2D(startingPoint[i][0], startingPoint[i][1])
-    });
-  }
-}
-
 export function start() {
   console.log("starting...");
   for (var i = 0; i < 4; i++) {
@@ -1000,18 +983,6 @@ export function start() {
     player[i].actionState = "WAIT";
   }
   getKeyboardCookie();
-  getTargetCookies();
-  giveMedals();
-  getTargetStageCookies();
-  getAudioCookies();
-  getGameplayCookies();
-  $("#keyboardButton").click(function () {
-    $("#keyboardControlsImg").toggle();
-    $("#keyboardPrompt").hide();
-  });
-  $("#controllerButton").click(function () {
-    $("#controllerSupportContainer").toggle();
-  });
   let nullInputBuffers = [nullInputs(), nullInputs(), nullInputs(), nullInputs()];
   gameTick(nullInputBuffers);
 }
